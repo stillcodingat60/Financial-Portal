@@ -1,0 +1,43 @@
+﻿@model Financial_Portal.Models.Invite
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Invite</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EmailInvite)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmailInvite)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HhId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HhId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CodeNr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CodeNr)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

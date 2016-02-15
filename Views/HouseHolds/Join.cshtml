@@ -1,0 +1,45 @@
+﻿@model Financial_Portal.Models.HouseHold
+<br/><br /><br /><br />
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="jumbotron centered">
+    <h3>This is the Join Portal Window</h3>
+    <p class="lead">To start, please log into the system, per the instructions below.</p>
+    <p>>Learn more &raquo;</p>
+</div>
+
+
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="row">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-3 centered">
+            <h4>Join HouseHold</h4>
+            <h3>@ViewBag.errorMessage</h3>
+            <form id="contact-form" action="@Url.Action("Join","HouseHolds")" method="post">
+
+                @Html.AntiForgeryToken()
+                <div>
+                    <label>Enter Invite Code</label>
+                    <input type="text" class="form-control" name="Code" />
+                    
+                </div>
+                <div>
+                    <br />
+                    <button class="btn btn-sm btn-primary">Invite</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-lg-2 centered">
+            OR
+        </div>
+        <div class="col-lg-3 centered">
+            <br /><br /><br /><br />
+            <p>To start a new Household, click this button: <button class="btn btn-sm btn-primary">@Html.ActionLink("Create HouseHold", "Create", "HouseHolds")</button></p>
+        </div>
+        <div class="col-lg-2"></div>
+    </div>
+}
+
+

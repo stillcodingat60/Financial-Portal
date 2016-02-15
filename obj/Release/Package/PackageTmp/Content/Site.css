@@ -1,0 +1,496 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+html,
+input,
+select,
+textarea {
+    color: #222;
+}
+
+body {
+    line-height: 1;
+    color: #555;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    height: 100%;
+    -webkit-font-smoothing: antialiased;
+    -webkit-overflow-scrolling: touch;
+}
+
+button {
+    color: #3498db;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+/*
+ * Remove text-shadow in selection highlight: h5bp.com/i
+ * These selection rule sets have to be separate.
+ * Customize the background color to match your design.
+ */
+
+::-moz-selection {
+    background: #f2c2c9;
+    color: #a4003a;
+    text-shadow: none;
+}
+
+::selection {
+    background: #16a085;
+    color: #a4003a;
+    text-shadow: none;
+}
+
+/*
+ * A better looking default horizontal rule
+ */
+
+hr {
+    display: block;
+    height: 2px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+    position: relative;
+}
+
+/*
+ * Remove the gap between images and the bottom of their containers: h5bp.com/i/440
+ */
+
+img {
+    vertical-align: middle;
+}
+
+#blog-label {
+    margin-top: 10px;
+}
+
+/*
+ * Allow only vertical resizing of textareas.
+ */
+
+textarea {
+    resize: vertical;
+}
+
+#bodydisplay {
+    font-size: 1em;
+}
+
+
+/* ==========================================================================
+   Blog styles
+   ========================================================================== */
+
+.col-md-4 {
+    padding-bottom: 20px;
+}
+
+#blogwrap {
+    margin: 10px;
+    padding-top: 10px;
+    vertical-align: top;
+}
+
+#right {
+    float: right;
+}
+
+.well {
+    border-left-style: solid;
+}
+
+.lead {
+
+    height: auto;
+}
+
+#editor {
+    width: 600px;
+    height: 600px;
+}
+
+.row {
+    margin-right: 0px;
+    margin-left: -15px;
+}
+
+.col-lg-4 {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+label {
+    /* margin-top:15px;*/
+}
+
+.greywrap {
+    background: #f5f5f5;
+    margin-top: 0px;
+    padding-top: 35px;
+    border-bottom: 1px solid #ddd;
+    /*	text-align: center;*/
+}
+
+.aboutpageimage {
+    margin: 10px;
+    float: right;
+}
+
+ul {
+    width: auto;
+    margin: 0 auto;
+}
+
+#blogpost {
+    background-color: rgba(0,0,0,0.6);
+    border: inset;
+    padding: 15px;
+    border-width: 3px;
+    border-color: #000;
+}
+
+.navbar-default {
+    border-color: transparent;
+    background-color: #dadada;
+}
+
+
+.navbar-toggle {
+    border-color: transparent;
+    border: 0px solid transparent;
+}
+
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+    background-color: #16a085;
+    color: white;
+}
+
+a img {
+    background: white;
+}
+
+/* Titles */
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Raleway";
+    font-weight: 300;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+
+/* Paragraph & Typographic */
+p {
+    line-height: 28px;
+    margin-bottom: 5px;
+}
+
+.centered {
+    text-align: center;
+}
+
+.paragraph-lead {
+    font-size: 20px;
+    color: #3498db;
+}
+
+strong {
+    font-weight: 700;
+}
+
+em {
+    font-weight: 300;
+}
+
+pre {
+    background: #ebebeb;
+    border: none;
+    font-family: "Monaco";
+    font-size: 16px;
+    color: #666;
+    padding: 20px;
+    line-height: 28px;
+}
+
+small {
+    font-size: 12px;
+}
+
+blockquote,
+blockquote p {
+    line-height: 28px;
+    color: #999;
+    font-weight: 300;
+    font-style: italic;
+}
+
+blockquote {
+    position: relative;
+    margin: 0 0 40px -30px;
+    padding-left: 30px;
+    border-left: 5px solid #3498db;
+}
+
+blockquote cite {
+        position: absolute;
+        bottom: -25px;
+        right: 0;
+        font-size: 12px;
+        font-style: italic;
+        color: #333;
+        font-weight: 300;
+}
+
+blockquote cite:before {
+    content: "-- ";
+}
+
+/* Images */
+.overflow-image {
+    margin-top: -65px;
+}
+
+/* Links */
+a {
+    color: white;
+    word-wrap: break-word;
+    -webkit-transition: color 0.1s ease-in, background 0.1s ease-in;
+    -moz-transition: color 0.1s ease-in, background 0.1s ease-in;
+    -ms-transition: color 0.1s ease-in, background 0.1s ease-in;
+    -o-transition: color 0.1s ease-in, background 0.1s ease-in;
+    transition: color 0.1s ease-in, background 0.1s ease-in;
+}
+
+a:hover,
+a:focus {
+        color: #c0392b;
+        text-decoration: none;
+        outline: 0;
+    }
+
+a:before,
+a:after {
+        -webkit-transition: color 0.1s ease-in, background 0.1s ease-in;
+        -moz-transition: color 0.1s ease-in, background 0.1s ease-in;
+        -ms-transition: color 0.1s ease-in, background 0.1s ease-in;
+        -o-transition: color 0.1s ease-in, background 0.1s ease-in;
+        transition: color 0.1s ease-in, background 0.1s ease-in;
+    }
+
+#solutions {
+    color: white;
+}
+
+
+
+/* ==========================================================================
+   Wrap Sections
+   ========================================================================== */
+
+#headerwrap {
+    background: url(../img/header_bg.jpg) no-repeat center top;
+    margin-top: -50px;
+    padding-top: 120px;
+    text-align: center;
+    background-position: center center;
+    min-height: 650px;
+    width: 100%;
+    -webkit-background-size: 100%;
+    -moz-background-size: 100%;
+    -o-background-size: 100%;
+    background-size: 100%;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+#headerwrap h1 {
+        color: #ffffff;
+        margin-top: 90px;
+        padding-bottom: 30px;
+        letter-spacing: 8px;
+        font-size: 100px;
+        font-weight: bold;
+        text-shadow: 2px 2px 2px #000;
+    }
+
+#headerwrap p {
+        color: #ffffff;
+        font-size: 40px;
+        font-weight: 400;
+        text-align: center;
+        line-height: 40px;
+        letter-spacing: 3px;
+        margin-left: 15px;
+        text-shadow: 1px 1px 1px #000;
+    }
+
+#greywrap .callout {
+    margin-bottom: 20px;
+}
+
+#greywrap .icon {
+    font-size: 60px;
+    line-height: 30px;
+    margin-bottom: 10px;
+}
+
+#footerwrap {
+    background: #2b2b2b;
+    margin-top: 0px;
+    padding-top: 40px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+#footerwrap h4 {
+        color: white;
+    }
+
+/* ==========================================================================
+   Blog Section
+   ========================================================================== */
+
+.blog-bg {
+    background: #2b2b2b;
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+.blog-bg h4 {
+        color: #dadada;
+        padding-top: 0px;
+    }
+
+.blog-bg h5 {
+        color: #dadada;
+        font-size: 11px;
+    }
+
+.blog-content {
+    padding-top: 10px;
+    background: #f2f2f2;
+    margin: 10px;
+    height: auto;
+    max-height:auto;
+    vertical-align: top;
+}
+
+.comment-content {
+    padding-top: 10px;
+    background: inherit;
+    margin: 10px;
+    height: auto;
+    max-height:auto;
+    vertical-align: top;
+}
+
+.img-responsive {
+        
+}
+
+.picbucket{
+    float:right;
+    height:auto;
+    max-height:none;
+    max-width:230px;
+}
+
+
+
+/* ==========================================================================
+   MEDIA QUERIES
+   ========================================================================== */
+
+
+@media screen and (max-width:1050px), screen and (max-device-width:1050px) {
+    body .header {
+        background-attachment: scroll;
+    }
+}
+
+
+/*ipad portrait*/
+@media only screen and (min-device-width:768px) and (max-device-width : 1024px) and (orientation : portrait) {
+    .header {
+        background-attachment: scroll;
+    }
+}
+
+@media screen and (max-width:769px) {
+    #headerwrap h1 {
+        font-size: 80px;
+    }
+
+    #headerwrap p {
+        font-size: 30px;
+        line-height: 38px;
+    }
+}
+
+/* ==========================================================================
+   Base Styles, Bootstrap Modifications & Fonts Import
+   ========================================================================== */
+
+@import url(http://fonts.googleapis.com/css?family=Montserrat:400,700);
+
+.phil {
+    width: 100%;
+    height: auto;
+}
+
+::-moz-selection {
+    background: #f2c2c9;
+    color: #a4003a;
+    text-shadow: none;
+}
+
+::selection {
+    background: #16a085;
+    color: #a4003a;
+    text-shadow: none;
+}
+
+
+.centered {
+    text-align: center;
+}
+
+.mt {
+    margin-top: 80px;
+}
+
+.mb {
+    margin-bottom: 80px;
+}
