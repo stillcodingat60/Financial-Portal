@@ -1,0 +1,35 @@
+﻿@model Financial_Portal.Models.ApplicationUser
+@{
+    ViewBag.Title = "EditProfile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="row">
+    <h2>EditProfile</h2>
+    <div class="col-lg-4"></div>
+    <div class="col-lg-4 centered">
+        <h4 class="alert-success">@ViewBag.message</h4>
+        <form id="contact-form" action="@Url.Action("EditProfile","Account")" method="post" novalidate>
+            <table class="table table-bordered table-condensed table-responsive">
+                <tr class="centered">
+                    <th class="centered">Edit Your First Name</th>
+                    <th class="centered">Edit Your Last Name</th>
+                </tr>
+                <tr class="centered">
+                    <th class="centered">@Html.DisplayFor(Model => Model.FirstName)</th>
+                    <th class="centered">@Html.DisplayFor(Model => Model.LastName)</th>
+                </tr>
+                <tr class="centered">
+                    @Html.AntiForgeryToken()
+                    <td class="centered"><input name="FName" />FName</td>
+                    <td class="centered"><input name="LName" />LName</td>
+                </tr>
+            </table>
+            <input type="hidden" name="Id" value=@Html.DisplayFor(model => model.Id) />
+            <button class="btn btn-sucess">Change</button>
+        </form>
+    </div>
+    <div class="col-lg-4"></div>
+</div>

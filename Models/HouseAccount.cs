@@ -14,6 +14,7 @@ namespace Financial_Portal.Models
         public int Id { get; set; }
         public string HAName { get; set; }
         public int HhId { get; set; }
+        public decimal Balance { get; set; }
 
         public virtual HouseHold Hh { get; set; }
 

@@ -7,63 +7,83 @@
 
 <h2>Details</h2>
 
+<h3>
+    <label>Welcome to HouseHold: </label>
+    @Html.DisplayFor(model => model.HName) - ID:
+    @Html.DisplayFor(model => model.Id)
+</h3>
+<div class="row">
+    <div class="col-lg-4 left centered">
+        <br />
+        <table class="table table-bordered table-condensed table-responsive">
 
-@Html.DisplayNameFor(model => model.HName)
-@Html.DisplayNameFor(model => model.Id)
-@Html.DisplayFor(model => model.HName)
-@Html.DisplayFor(model => model.Id)
-
-<table class="table">
-    <div class="row">
-        <div class="col-lg-10">
-
+            <tr>
+                <th class="col-lg-2 centered">
+                    First Name
+                </th>
+                <th class="col-lg-2 centered">
+                    Last Name
+                </th>
+                <th class="col-lg-2 centered">
+                    Email
+                </th>
+            </tr>
             @foreach (var item in Model.Users)
             {
-             <tr>
-                <th>
-                    @Html.DisplayNameFor(model => item.FirstName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => item.LastName)
-                </th>
-                <th></th>
-                 <th>
-                     @Html.DisplayFor(model => item.FirstName)
-                 </th>
-                 <th>
-                     @Html.DisplayFor(model => item.LastName)
-                 </th>
-            </tr>
-            
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => item.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.Email)
+                    </td>
+                </tr>
             }
-    </table>
+
+        </table>
+    </div>
+
+    <div class="col-lg-4 right">
     <form id="contact-form" action="@Url.Action("Invite","HouseHolds")" method="post" novalidate>
+ 
+        @Html.AntiForgeryToken()        
+        <h4>Invite someone to join your Household</h4>
+        <label for="name">First / Last Name</label> <br />
+        <input type="text" class="form-control" name="FName" placeholder="Their first & last name" /><br />
 
-        <row>
-            @Html.AntiForgeryToken()
-            <div class="col-lg-12 centered border-head">
-                <h2>Invite someone to join your Household</h2>
-            </div>
-        </row>
-        <div class="row">
-            <div class="col-lg-3"></div>
-            <div class="col-lg-3">
-                <label for="name">First &Aacute; Last Name</label>
-                <input type="text" class="form-control" name="FName" placeholder="Their first & last name" />
-
-                <label for="email">Email</label>
-                <input type="email" class="form-control" name="Email" placeholder="Their email" />
-                <input type="hidden" name="HhId" value=@Html.DisplayFor(model => model.Id)>
-            </div>
-
-            <div class="col-lg-3 centered">
-                <br /> <br /><br />
-                <label>The message will be automatically generated for you.</label>
-                <br /> <br />
-                <button>
-                    Send Invitation
-                </button>
-            </div>
-            <div class="col-lg-3"></div>
-        </div>
+        <label for="email">Email</label><br />
+        <input type="email" class="form-control" name="Email" placeholder="Their email" />
+        <input type="hidden" name="HhId" value=@Html.DisplayFor(model => model.Id)>
+        <br />
+        <label>The message will be automatically generated for you.</label>
+        <br /> 
+        <button>
+            Send Invitation
+        </button>
     </form>
+    </div>
+    <div class="col-lg-4 centered">
+        <form id="contact-form" action="@Url.Action("Delete","HouseHolds")" method="post" novalidate>
+
+            @Html.AntiForgeryToken()
+            <h4>Leave the Household?</h4>
+            <label class="alert-danger">Please Note: THIS ACTION CANNOT BE UNDONE</label><br />
+            <br />
+            <button onclick="Sure">
+                Remove
+            </button>
+            <script>
+                function Sure() {
+                    var r = confirm("Press a button");
+                    if (r == true) {
+                        x = "You pressed OK!";
+                    } else {
+                        x = "You pressed Cancel!";
+                    }
+            </script>
+        </form>
+    </div>
+</div>

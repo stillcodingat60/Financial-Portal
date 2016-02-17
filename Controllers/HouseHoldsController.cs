@@ -36,13 +36,14 @@ namespace Financial_Portal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            HouseHold houseHold = db.Households.Include("Users").FirstOrDefault(p => p.Id == id);
-            //HouseHold houseHold = db.Households.Find(id);
+
+            HouseHold houseHold = db.Households.Include("Users").Include("HAccounts").FirstOrDefault(p => p.Id == id);
+
             if (houseHold == null)
             {
                 return HttpNotFound();
             }
-
+        
             //var searchUsers = db.Users.AsQueryable();                               // this block of code sets up a search for users whose household id
             //searchUsers = searchUsers.Where(p => p.HouseHoldId == houseHold.Id);    // matches the currently passed HouseHold id
             //var hhUsers = searchUsers.OrderByDescending(p => p.LastName).ToList();  // and returns the listing to the view
@@ -68,16 +69,31 @@ namespace Financial_Portal.Controllers
                 db.Households.Add(houseHold);
                 db.SaveChanges();                   //save the newly created household
 
-                var hh = db.Households.FirstOrDefault(h => h.HName == houseHold.HName);  //retrieve the newly created household by name because we don't have the HhId
+                //var hh = db.Households.FirstOrDefault(h => h.HName == houseHold.HName);  //retrieve the newly created household by name because we don't have the HhId
+                
                 //var currUser = db.Users.Find(User.Identity.GetUserId()).HouseHoldId==houseHold.Id;    //now we retrieve the user record and assign the household id
-              
-                var user = db.Users.Find(User.Identity.GetUserId());
-                user.HouseHoldId = hh.Id;
-               // var currUser = hhId == houseHold.Id; //returns true if both are equal
-              
-                db.SaveChanges();
 
-                return RedirectToAction("Index", new { id = hh.Id });  //id name must match the id name in the index action passed param
+                var searchCats = db.Categories.AsQueryable();                         
+                searchCats = searchCats.Where(p => p.HhId == null);         //add the initial list of seeded categories
+                var CatList = new List<Category>();                         //for each newly created HouseHold
+                foreach (var eachCat in searchCats)
+                {
+                    var category = new Category()
+                    {
+                        CName = eachCat.CName,
+                        HhId = houseHold.Id,
+                        Type = eachCat.Type
+                    };
+                    CatList.Add(category);
+                }
+                db.Categories.AddRange(CatList);
+
+                var user = db.Users.Find(User.Identity.GetUserId());
+                user.HouseHoldId = houseHold.Id;
+                              
+                db.SaveChanges();            //saves the hhid to ApplicationUser
+
+                return RedirectToAction("Details", new { id = houseHold.Id });  //id name must match the id name in the index action passed param
 
 
                 // var CatName = db.Categories.OrderByDescending(c => c.CName).ToList(); get list of categories to initialize the new Household
@@ -100,13 +116,13 @@ namespace Financial_Portal.Controllers
             var requestor = contact.FName + ' ' + contact.LName;
             var Emailer = new EmailService();
             
-            contact.Message = "Please join my financial household. You will have to create an account on the application. Begin by going to Http://jmmcconnell-financial-portal.azurewebsites.net to login and use the code listed below to validate";
+            contact.Message = "Please join my financial household. You will have to create an account on the application. Begin by going to Http://jmm-financialportal.azurewebsites.net to login and use the code listed below to validate";
 
             var mail = new IdentityMessage
             {
                 Subject = "Invitation to Join",
                 Destination = contact.Email,
-                Body = "You have received an invitation from: " + requestor + "( " + contact.Email + ") with the following contents. \n\n" + contact.Message + "\n\n Your Invitation Code is: " + inv.CodeNr
+                Body = "You have received an invitation with the following contents. \n\n" + contact.Message + "\n\n Your Invitation Code is: " + inv.CodeNr
             };
             Emailer.SendAsync(mail);
 
@@ -114,29 +130,28 @@ namespace Financial_Portal.Controllers
         }
 
         // GET: HouseHolds/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete()
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            HouseHold houseHold = db.Households.Find(id);
-            if (houseHold == null)
-            {
-                return HttpNotFound();
-            }
-            return View(houseHold);
+            var user = db.Users.Find(User.Identity.GetUserId());
+            user.HouseHoldId = null;
+            db.SaveChanges();
+            return RedirectToAction("Create");
+           
         }
 
         // POST: HouseHolds/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(string Y, string N)
         {
-            HouseHold houseHold = db.Households.Find(id);
-            db.Households.Remove(houseHold);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            if (!String.IsNullOrEmpty(Y))
+            {
+                var user = db.Users.Find(User.Identity.GetUserId());
+                user.HouseHoldId = null;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View();
         }
 
         protected override void Dispose(bool disposing)

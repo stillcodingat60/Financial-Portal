@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Financial_Portal.Models;
+using Microsoft.AspNet.Identity;
 
 namespace Financial_Portal.Controllers
 {
@@ -15,10 +16,13 @@ namespace Financial_Portal.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Transactions
-        public ActionResult Index()
-        {
+        public ActionResult Index(int? HAccount)
+        {                      
             var transactions = db.Transactions.Include(t => t.Cat).Include(t => t.HAccount);
-            return View(transactions.ToList());
+            if (transactions != null)
+                return View(transactions.ToList());
+            else
+                return View();
         }
 
         // GET: Transactions/Details/5
@@ -39,8 +43,10 @@ namespace Financial_Portal.Controllers
         // GET: Transactions/Create
         public ActionResult Create()
         {
-            ViewBag.CatId = new SelectList(db.Categories, "Id", "CName");
-            ViewBag.HAccountId = new SelectList(db.HAccounts, "Id", "HAName");
+            var user = db.Users.Find(User.Identity.GetUserId());
+            ViewBag.CatId = new SelectList(db.Categories.Where(p => p.HhId == user.HouseHoldId), "Id", "CName");
+            ViewBag.HAccountId = new SelectList(db.HAccounts.Where(q => q.HhId == user.HouseHoldId), "Id", "HAName");
+            ViewBag.Type = new SelectList(new[] { "income", "expense" }, "Type");
             return View();
         }
 
@@ -49,7 +55,7 @@ namespace Financial_Portal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,CatId,HAccountId,Created,Descript,Reconcile,Amount")] Transaction transaction)
+        public ActionResult Create([Bind(Include = "Id,CatId,HAccountId,Created,Descript,Type,Reconcile,Amount")] Transaction transaction)
         {
             if (ModelState.IsValid)
             {
@@ -58,8 +64,10 @@ namespace Financial_Portal.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CatId = new SelectList(db.Categories, "Id", "CName", transaction.CatId);
-            ViewBag.HAccountId = new SelectList(db.HAccounts, "Id", "HAName", transaction.HAccountId);
+            var user = db.Users.Find(User.Identity.GetUserId());            
+
+            ViewBag.CatId = new SelectList(db.Categories.Where(p => p.HhId == user.HouseHoldId), "Id", "CName", transaction.CatId);
+            ViewBag.HAccountId = new SelectList(db.HAccounts.Where(q => q.HhId == user.HouseHoldId), "Id", "HAName", transaction.HAccountId);
             return View(transaction);
         }
 
@@ -75,8 +83,10 @@ namespace Financial_Portal.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CatId = new SelectList(db.Categories, "Id", "CName", transaction.CatId);
-            ViewBag.HAccountId = new SelectList(db.HAccounts, "Id", "HAName", transaction.HAccountId);
+            var user = db.Users.Find(User.Identity.GetUserId());
+            ViewBag.CatId = new SelectList(db.Categories.Where(p => p.HhId == user.HouseHoldId), "Id", "CName");
+            ViewBag.HAccountId = new SelectList(db.HAccounts.Where(q => q.HhId == user.HouseHoldId), "Id", "HAName");
+            ViewBag.Type = new SelectList(new[] { "income", "expense" }, "Type");
             return View(transaction);
         }
 
@@ -93,8 +103,10 @@ namespace Financial_Portal.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CatId = new SelectList(db.Categories, "Id", "CName", transaction.CatId);
-            ViewBag.HAccountId = new SelectList(db.HAccounts, "Id", "HAName", transaction.HAccountId);
+            var user = db.Users.Find(User.Identity.GetUserId());
+            ViewBag.CatId = new SelectList(db.Categories.Where(p => p.HhId == user.HouseHoldId), "Id", "CName");
+            ViewBag.HAccountId = new SelectList(db.HAccounts.Where(q => q.HhId == user.HouseHoldId), "Id", "HAName");
+            ViewBag.Type = new SelectList(new[] { "income", "expense" }, "Type");
             return View(transaction);
         }
 
@@ -119,6 +131,9 @@ namespace Financial_Portal.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Transaction transaction = db.Transactions.Find(id);
+            transaction.HAccountId = null;
+            transaction.CatId = null;
+            
             db.Transactions.Remove(transaction);
             db.SaveChanges();
             return RedirectToAction("Index");

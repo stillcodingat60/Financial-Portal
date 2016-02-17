@@ -17,6 +17,7 @@ namespace Financial_Portal.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         public AccountController()
         {
@@ -158,6 +159,40 @@ namespace Financial_Portal.Controllers
                     return View(model);
             }
         }
+
+        //
+        // GET: /Account/Edit Profile
+        [AllowAnonymous]
+        public ActionResult EditProfile()
+        {
+            var user = db.Users.Find(User.Identity.GetUserId());
+            
+            return View(user);
+        }
+
+        //
+        // GET: /Account/Edit Profile
+        [HttpPost]
+        public ActionResult EditProfile(string FName, string LName, string Id)
+        {
+            var user = db.Users.Find(Id);
+
+            if (!String.IsNullOrEmpty(FName))
+            {
+                user.FirstName = FName;
+            }
+            
+            if (!String.IsNullOrEmpty(LName))
+            {
+                user.LastName = LName;
+            }
+                       
+            db.SaveChanges();
+            
+            ViewBag.message = "Change Successful";
+            return View(user);
+        }
+
 
         //
         // GET: /Account/Register

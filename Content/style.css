@@ -1956,6 +1956,14 @@ label {
 	margin-bottom: 15px;
 }
 
+#loginLink {
+    color: blue;
+}
+
+#registerLink{
+    color:blue;
+}
+
 
 /*LOCK SCREEN CONF*/
 #showtime {

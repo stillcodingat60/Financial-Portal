@@ -7,63 +7,123 @@
 
 <h2>Details</h2>
 
+<h3>
+    <label>Welcome to HouseHold: </label>
+    @Html.DisplayFor(model => model.HName)
+</h3>
+<div class="row">
+    <div class="col-lg-6 left centered">
+        <br />
+        <table class="table table-bordered table-condensed table-responsive">
 
-@Html.DisplayNameFor(model => model.HName)
-@Html.DisplayNameFor(model => model.Id)
-@Html.DisplayFor(model => model.HName)
-@Html.DisplayFor(model => model.Id)
-
-<table class="table">
-    <div class="row">
-        <div class="col-lg-10">
-
-            @foreach (var item in Model.Users)
-            {
-             <tr>
-                <th>
-                    @Html.DisplayNameFor(model => item.FirstName)
+            <tr>
+                <th class="col-lg-2 centered">
+                    First Name
                 </th>
-                <th>
-                    @Html.DisplayNameFor(model => item.LastName)
+                <th class="col-lg-2 centered">
+                    Last Name
                 </th>
-                <th></th>
-                 <th>
-                     @Html.DisplayFor(model => item.FirstName)
-                 </th>
-                 <th>
-                     @Html.DisplayFor(model => item.LastName)
-                 </th>
+                <th class="col-lg-2 centered">
+                    Email
+                </th>
             </tr>
-            
+            @foreach (var item in Model.Users.OrderByDescending(p => p.LastName))
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => item.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.Email)
+                    </td>
+                </tr>
             }
-    </table>
-    <form id="contact-form" action="@Url.Action("Invite","HouseHolds")" method="post" novalidate>
 
-        <row>
+        </table>
+    </div>
+    <div class="col-lg-6 left centered">
+        <br />
+        <table class="table table-bordered table-condensed table-responsive">
+
+            <tr>
+                <th class="col-lg-2 centered">
+                    Account Name
+                </th>
+                <th class="col-lg-2 centered">
+                    Account Bal
+                </th>
+                <th class="col-lg-2 centered">
+                    Action
+                </th>
+            </tr>
+            @foreach (var item in Model.HAccounts.OrderByDescending(p => p.HAName))
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => item.HAName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.Balance)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Enter Trx", "Index", "Transactions", new { HAccount = item.Id }, new { @class = "btn btn-primary" })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-lg-2 right"></div>
+    <div class="col-lg-4 right">
+        <form id="contact-form" action="@Url.Action("Invite","HouseHolds")" method="post" novalidate>
+
             @Html.AntiForgeryToken()
-            <div class="col-lg-12 centered border-head">
-                <h2>Invite someone to join your Household</h2>
-            </div>
-        </row>
-        <div class="row">
-            <div class="col-lg-3"></div>
-            <div class="col-lg-3">
-                <label for="name">First &Aacute; Last Name</label>
-                <input type="text" class="form-control" name="FName" placeholder="Their first & last name" />
+            <h4>Invite someone to join your Household</h4>
+            <label for="name">First / Last Name</label> <br />
+            <input type="text" class="form-control" name="FName" placeholder="Their first & last name" /><br />
 
-                <label for="email">Email</label>
-                <input type="email" class="form-control" name="Email" placeholder="Their email" />
-                <input type="hidden" name="HhId" value=@Html.DisplayFor(model => model.Id)>
+            <label for="email">Email</label><br />
+            <input type="email" class="form-control" name="Email" placeholder="Their email" />
+            <input type="hidden" name="HhId" value=@Html.DisplayFor(model => model.Id)>
+            <br />
+            <label>The message will be automatically generated for you.</label>
+            <br />
+            <button>
+                Send Invitation
+            </button>
+        </form>
+    </div>
+    <div class="col-lg-4 centered">
+        @Html.AntiForgeryToken()
+        <h4>Leave the Household?</h4>
+        <label class="alert-danger">Please Note: THIS ACTION CANNOT BE UNDONE</label><br />
+        <br />
+        <a type="button"
+            class="btn"
+            href="#UserPrompt"
+            data-toggle="modal">LEAVE HOUSEHOLD</a>
+        @*<form id="contact-form" action="@Url.Action("Delete","HouseHolds")" method="post" novalidate>*@
+        <div class="modal fade" id="UserPrompt">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-header">
+                    <a class="close" data-dismiss="modal">&times;</a>
+                    <h3>Are You Sure?</h3>
+                </div>
+                <div class="modal-body">
+                    <label class="control-label" for="Title">Click Y or N</label>
+                    @Html.ActionLink("Yes", "Delete", null, new { @class = "btn btn-primary" })
+                    @*<input type="text" class="btn btn-primary" data-dismiss="modal" value="Y" name="Y" /> or*@
+                    <input type="text" class="btn btn-primary" data-dismiss="modal" value="N" name="N" />
+                </div>
             </div>
-
-            <div class="col-lg-3 centered">
-                <br /> <br /><br />
-                <label>The message will be automatically generated for you.</label>
-                <br /> <br />
-                <button>
-                    Send Invitation
-                </button>
-            </div>
-            <div class="col-lg-3"></div>
         </div>
-    </form>
+        @*</form>*@
+    </div>
+    <div class="col-lg-2 right"></div>
+</div>

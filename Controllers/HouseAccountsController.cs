@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Financial_Portal.Models;
+using Microsoft.AspNet.Identity;
 
 namespace Financial_Portal.Controllers
 {
@@ -17,7 +18,15 @@ namespace Financial_Portal.Controllers
         // GET: HouseAccounts
         public ActionResult Index()
         {
-            var hAccounts = db.HAccounts.Include(h => h.Hh);
+            //var user = db.Users.Find(User.Identity.GetUserId());
+            var HhId = Convert.ToInt32(User.Identity.GetHouseHoldId());
+
+            var searchAccts = db.HAccounts.AsQueryable();                               // this block of code sets up a search for users whose household id
+            searchAccts = searchAccts.Where(p => p.HhId == HhId);                // matches the currently passed HouseHold id
+            var hAccounts = searchAccts.OrderByDescending(p => p.HAName).ToList();  // and returns the listing to the view
+
+            //var hAccounts = db.HAccounts.Include(h => h.Hh);
+
             return View(hAccounts.ToList());
         }
 
@@ -39,7 +48,9 @@ namespace Financial_Portal.Controllers
         // GET: HouseAccounts/Create
         public ActionResult Create()
         {
-            ViewBag.HhId = new SelectList(db.Households, "Id", "Id");
+            var HhId = Convert.ToInt32(User.Identity.GetHouseHoldId());
+            ViewBag.HhId = HhId;
+            //ViewBag.HhId = new SelectList(db.Households, "Id", "Id");
             return View();
         }
 
@@ -52,6 +63,7 @@ namespace Financial_Portal.Controllers
         {
             if (ModelState.IsValid)
             {
+
                 db.HAccounts.Add(houseAccount);
                 db.SaveChanges();
                 return RedirectToAction("Index");
