@@ -4,6 +4,9 @@ using System.Linq;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Web;
+using System.Web.Mvc;
+using Microsoft.AspNet.Identity.Owin;
+using System.Threading.Tasks;
 
 namespace Financial_Portal.Models
 {
@@ -45,5 +48,14 @@ namespace Financial_Portal.Models
             var hid = cUser.Claims.FirstOrDefault(c => c.Type == "HouseHoldId");
             return (hid != null && !string.IsNullOrWhiteSpace(hid.Value));
         }
+
+        public static async Task RefreshAuthentication(this HttpContextBase context, ApplicationUser user)
+        {
+            context.GetOwinContext().Authentication.SignOut();
+            await context.GetOwinContext().Get<ApplicationSignInManager>().SignInAsync(user, isPersistent: false, rememberBrowser: false);
+        }
+
     }
 }
+
+

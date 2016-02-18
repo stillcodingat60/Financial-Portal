@@ -20,7 +20,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.CatId, "CatId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("CatId", null, htmlAttributes: new { @class = "form-control" })
+               
+                @Html.DropDownList("CatId" , ViewBag.CId as SelectList, "select", htmlAttributes: new { @class = "form-control"})
                 @Html.ValidationMessageFor(model => model.CatId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -28,7 +29,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.HAccountId, "HAccountId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("HAccountId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("HAccountId", ViewBag.HAcctId as SelectList, "select", htmlAttributes: new { @class = "form-control"})
                 @Html.ValidationMessageFor(model => model.HAccountId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -36,7 +37,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Created, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Created, new { htmlAttributes = new { @class = "form-control", @value = "System.DateTimeOffset.Now.LocalDateTime", @type = "date", @onfocus = "(this.type='date')"} })
+                @Html.EditorFor(model => model.Created, new { htmlAttributes = new { @class = "form-control", @type = "text", @onfocusout = "(this.type='text')", @onfocus = "(this.type='date')" } })
                 @Html.ValidationMessageFor(model => model.Created, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -52,7 +53,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Type, "Type", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("Type", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("Type", ViewBag.Grype as SelectList, "select", htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
             </div>
         </div>

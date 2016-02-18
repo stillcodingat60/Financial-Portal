@@ -21,9 +21,7 @@
             <th>
                 Balance
             </th>
-            <th>
-                Reconciled
-            </th>
+
             <th></th>
         </tr>
 
@@ -37,11 +35,9 @@
                     @Html.DisplayFor(modelItem => item.HAName)
                 </td>
                 <td>
-                    0
+                    @Html.DisplayFor(modelItem => item.Balance)
                 </td>
-                <td>
-                    0
-                </td>
+
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                     @Html.ActionLink("Details", "Details", new { id = item.Id }) |

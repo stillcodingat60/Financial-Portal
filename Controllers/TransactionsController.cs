@@ -59,12 +59,17 @@ namespace Financial_Portal.Controllers
         {
             if (ModelState.IsValid)
             {
+                var hhacct = db.HAccounts.Find(transaction.HAccountId);
+                if (transaction.Type == "income")
+                    hhacct.Balance += transaction.Amount;
+                else
+                    hhacct.Balance -= transaction.Amount;
                 db.Transactions.Add(transaction);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            var user = db.Users.Find(User.Identity.GetUserId());            
+            var user = db.Users.Find(User.Identity.GetUserId());
 
             ViewBag.CatId = new SelectList(db.Categories.Where(p => p.HhId == user.HouseHoldId), "Id", "CName", transaction.CatId);
             ViewBag.HAccountId = new SelectList(db.HAccounts.Where(q => q.HhId == user.HouseHoldId), "Id", "HAName", transaction.HAccountId);
@@ -84,9 +89,9 @@ namespace Financial_Portal.Controllers
                 return HttpNotFound();
             }
             var user = db.Users.Find(User.Identity.GetUserId());
-            ViewBag.CatId = new SelectList(db.Categories.Where(p => p.HhId == user.HouseHoldId), "Id", "CName");
-            ViewBag.HAccountId = new SelectList(db.HAccounts.Where(q => q.HhId == user.HouseHoldId), "Id", "HAName");
-            ViewBag.Type = new SelectList(new[] { "income", "expense" }, "Type");
+            ViewBag.CId = new SelectList(db.Categories.Where(p => p.HhId == user.HouseHoldId), "Id", "CName");
+            ViewBag.HAcctId = new SelectList(db.HAccounts.Where(q => q.HhId == user.HouseHoldId), "Id", "HAName");
+            ViewBag.Grype = new SelectList(new[] { "income", "expense" }, "Type");
             return View(transaction);
         }
 
@@ -95,18 +100,34 @@ namespace Financial_Portal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,CatId,HAccountId,Created,Descript,Reconcile,Amount")] Transaction transaction)
+        public ActionResult Edit([Bind(Include = "Id,CatId,HAccountId,Created,Descript,Type,Reconcile,Amount")] Transaction transaction)
         {
             if (ModelState.IsValid)
             {
+                var oldTrx = (from t in db.Transactions.AsNoTracking()
+                              where t.Id == transaction.Id
+                              select t).FirstOrDefault();
+                //oldTrx = db.Transactions.AsNoTracking().FirstOrDefault(c => c.Id == transaction.Id);    //this is the same as the previous statement - one is LINQ query syntax and this  line is method syntax
+
+                var hhacct = db.HAccounts.Find(transaction.HAccountId);
+                if (oldTrx.Type == "income")                //
+                    hhacct.Balance -= oldTrx.Amount;        // reverses the original trx
+                else                                        //
+                    hhacct.Balance += oldTrx.Amount;        //
+
+                if (transaction.Type == "income")           //
+                    hhacct.Balance += transaction.Amount;   // adds in the current changes, if any
+                else                                        //
+                    hhacct.Balance -= transaction.Amount;   //
+
                 db.Entry(transaction).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
             var user = db.Users.Find(User.Identity.GetUserId());
-            ViewBag.CatId = new SelectList(db.Categories.Where(p => p.HhId == user.HouseHoldId), "Id", "CName");
-            ViewBag.HAccountId = new SelectList(db.HAccounts.Where(q => q.HhId == user.HouseHoldId), "Id", "HAName");
-            ViewBag.Type = new SelectList(new[] { "income", "expense" }, "Type");
+            ViewBag.CId = new SelectList(db.Categories.Where(p => p.HhId == user.HouseHoldId), "Id", "CName");
+            ViewBag.HAcctId = new SelectList(db.HAccounts.Where(q => q.HhId == user.HouseHoldId), "Id", "HAName");
+            ViewBag.Grype = new SelectList(new[] { "income", "expense" }, "Type");
             return View(transaction);
         }
 
@@ -130,10 +151,18 @@ namespace Financial_Portal.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Transaction transaction = db.Transactions.Find(id);
+            Transaction transaction = db.Transactions.Find(id);     //retrieve the current transaction
+            var hhacct = db.HAccounts.Find(transaction.HAccountId); //retrieve the Bank Account for the transaction
+                        
             transaction.HAccountId = null;
             transaction.CatId = null;
             
+            //reverse the balance amount in the Account record
+            if (transaction.Type == "income")
+                hhacct.Balance -= transaction.Amount;
+            else
+                hhacct.Balance += transaction.Amount;
+
             db.Transactions.Remove(transaction);
             db.SaveChanges();
             return RedirectToAction("Index");

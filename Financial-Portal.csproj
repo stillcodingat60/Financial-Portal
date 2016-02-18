@@ -227,6 +227,7 @@
     </Compile>
     <Compile Include="Helper\Helper.cs" />
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\AuthorizeHouseholdRequired.cs" />
     <Compile Include="Models\Class1.cs" />
     <Compile Include="Models\HouseAccount.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
