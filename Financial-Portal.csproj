@@ -263,6 +263,7 @@
     <Content Include="Content\img\port04.jpg" />
     <Content Include="Content\img\port05.jpg" />
     <Content Include="Content\img\port06.jpg" />
+    <Content Include="Content\jquery.dataTables.min.css" />
     <Content Include="Content\style-responsive.css" />
     <Content Include="Content\style.css" />
     <Content Include="Content\table-responsive.css" />
@@ -320,6 +321,7 @@
     <Content Include="Scripts\jquery-1.8.3.min.js" />
     <Content Include="Scripts\jquery-ui-1.9.2.custom.min.js" />
     <Content Include="Scripts\jquery.backstretch.min.js" />
+    <Content Include="Scripts\jquery.dataTables.min.js" />
     <Content Include="Scripts\jquery.dcjqaccordion.2.7.js" />
     <Content Include="Scripts\jquery.js" />
     <Content Include="Scripts\jquery.nicescroll.js" />
@@ -384,20 +386,20 @@
     <Content Include="Views\Budgets\Details.cshtml" />
     <Content Include="Views\Budgets\Edit.cshtml" />
     <Content Include="Views\Budgets\Index.cshtml" />
-    <Content Include="Views\HouseAccounts\Create.cshtml" />
-    <Content Include="Views\HouseAccounts\Delete.cshtml" />
+    <Content Include="Views\HouseAccounts\_Create.cshtml" />
+    <Content Include="Views\HouseAccounts\_Delete.cshtml" />
     <Content Include="Views\HouseAccounts\Details.cshtml" />
-    <Content Include="Views\HouseAccounts\Edit.cshtml" />
+    <Content Include="Views\HouseAccounts\_Edit.cshtml" />
     <Content Include="Views\HouseAccounts\Index.cshtml" />
     <Content Include="Views\Invites\Create.cshtml" />
     <Content Include="Views\Invites\Delete.cshtml" />
     <Content Include="Views\Invites\Details.cshtml" />
     <Content Include="Views\Invites\Edit.cshtml" />
     <Content Include="Views\Invites\Index.cshtml" />
-    <Content Include="Views\Transactions\Create.cshtml" />
-    <Content Include="Views\Transactions\Delete.cshtml" />
-    <Content Include="Views\Transactions\Details.cshtml" />
-    <Content Include="Views\Transactions\Edit.cshtml" />
+    <Content Include="Views\Transactions\_Create.cshtml" />
+    <Content Include="Views\Transactions\_Delete.cshtml" />
+    <Content Include="Views\Transactions\_Details.cshtml" />
+    <Content Include="Views\Transactions\_Edit.cshtml" />
     <Content Include="Views\Transactions\Index.cshtml" />
     <Content Include="Views\HouseHolds\Create.cshtml" />
     <Content Include="Views\HouseHolds\Delete.cshtml" />
@@ -405,6 +407,7 @@
     <Content Include="Views\HouseHolds\Index.cshtml" />
     <Content Include="Views\HouseHolds\Join.cshtml" />
     <Content Include="Views\Account\EditProfile.cshtml" />
+    <Content Include="Views\HouseAccounts\_pDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

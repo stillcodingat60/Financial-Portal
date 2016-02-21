@@ -5,70 +5,89 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="body-content">
-    <h2>Index</h2>
+<h2>Index</h2>
 
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-    <table class="table">
+<p>
+    @Html.ActionLink("Create New", "Create", new { @class = "btn btn-primary" })
+</p>
+<table class="table stripe cell-border compact" id="myTable">
+    <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Cat.CName)
+            <th class="centered">
+                Category
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HAccount.HAName)
+            <th class="centered">
+                Account
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Created)
+            <th class="centered">
+                Date
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Descript)
+            <th class="centered">
+                Description
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Reconcile)
+            <th class="centered">
+                Reconcile
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Type)
+            <th class="centered">
+                Type
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Amount)
+            <th class="centered">
+                Amount
             </th>
             <th></th>
+            <th></th>
+            <th></th>
         </tr>
-
+    </thead>
+    <tbody>
         @foreach (var item in Model)
-        {
+            {
             <tr>
-                <td>
+                <td class="centered">
                     @Html.DisplayFor(modelItem => item.Cat.CName)
                 </td>
-                <td>
+                <td class="centered">
                     @Html.DisplayFor(modelItem => item.HAccount.HAName)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Created)
+                <td class="centered">
+                    @item.Created.ToString("MM/dd/yyyy")
                 </td>
-                <td>
+                <td class="centered">
                     @Html.DisplayFor(modelItem => item.Descript)
                 </td>
-                <td>
+                <td class="centered">
                     @Html.DisplayFor(modelItem => item.Reconcile)
                 </td>
-                <td>
+                <td class="centered">
                     @Html.DisplayFor(modelItem => item.Type)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Amount)
+                <td class="centered">
+                    @if(item.Type == "expense" && item.Amount > 0)
+                    {
+                        <p class="red">@item.Amount</p>
+                    }
+                    else
+                    {
+                        <p>@item.Amount</p>
+                    }                    
                 </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                <td class="centered">
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary" })
+                </td>
+                <td class="centered">
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-primary" })
+                </td>
+                <td class="centered">
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-primary" })
                 </td>
             </tr>
         }
-
-    </table>
-
-</div>
+    </tbody>
+</table>
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+    </script>
+}

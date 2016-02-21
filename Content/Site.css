@@ -3,13 +3,6 @@
     padding-bottom: 20px;
 }
 
-/* Set padding to keep content from hitting the edges */
-.body-content {
-    padding-top:45px;
-    padding-left: 15px;
-    padding-right: 15px;
-}
-
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
 */
@@ -410,7 +403,6 @@ a:after {
     background: #f2f2f2;
     margin: 10px;
     height: auto;
-    max-height:auto;
     vertical-align: top;
 }
 
@@ -419,7 +411,6 @@ a:after {
     background: inherit;
     margin: 10px;
     height: auto;
-    max-height:auto;
     vertical-align: top;
 }
 

@@ -27,7 +27,9 @@ namespace Financial_Portal
                       "~/Scripts/jquery.dcjqaccordion.2.7.js",
                       "~/Scripts/jquery.scrollTo.min.js",
                       "~/Scripts/jquery.nicescroll.js",
-                      "~/Scripts/common-scripts.js"));
+                      "~/Scripts/common-scripts.js"
+                     // "~/Scripts/jquery.dataTables.min.js"
+                      ));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
@@ -36,7 +38,9 @@ namespace Financial_Portal
                       "~/Content/style-responsive.css",
                       "~/Content/table-responsive.css",
                       "~/Content/to-do.css",
-                      "~/Content/zabuto_calendar.css"));
+                      "~/Content/zabuto_calendar.css"
+                      //"~/Content/jquery.dataTables.min.css"
+                      ));
         }
     }
 }

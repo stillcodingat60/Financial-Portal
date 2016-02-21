@@ -4,48 +4,78 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="body-content">
-    <h3>HouseHold Accounts</h3>
+<div class="row">
+    <div class="col-lg-6">
+        <h3>HouseHold Accounts
+            <button id="createButton" class="btn btn-primary">Create New Account</button>
+        </h3>
 
-    <p>
-        @Html.ActionLink("Create New Account", "Create", null, new {@class = "btn btn-primary"})
-    </p>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HAName)
-            </th>
-            <th>
-                Balance
-            </th>
+        <p>
+        <hr />    
+        </p>
+        <table class="table table-bordered table-striped table-hover" id="acctTable">
+            <thead>
+                <tr>
+                    <th class="centered">
+                        Account Name
+                    </th>
+                    <th class="centered">
+                        Balance
+                    </th>
+                    <th class="centered">
+                        Manage Accounts
+                    </th>
 
-            <th></th>
-        </tr>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.HAName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Balance)
+                        </td>
+                        <td class="centered">
+                            <button data-id="@item.Id" class="btn btn-primary editButton">Edit</button> |
+                            <button data-id="@item.Id" class="btn btn-primary delButton">DELETE</button> |
+                            @*<button data-id="@item.Id" class="btn btn-primary trxButton">Detail</button>*@
+                            @Html.ActionLink("Details", "Details", "HouseAccounts", new { id = item.Id }, new { @class = "btn btn-primary" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-lg-6 centered">
+        <div id="editAcct">
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.HAName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Balance)
-                </td>
-
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }) | 
-                    @Html.ActionLink("Enter Transactions", "Index", "Transactions", new { HAccount = item.Id }, new { @class = "btn btn-primary" })
-                </td>
-            </tr>
-        }
-
-    </table>
+        </div>
+    </div>
 </div>
+
+
+@section Scripts {
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $('.editButton').click(function () {
+                $('#editAcct').load("/HouseAccounts/_Edit/" + $(this).data('id'));
+            });
+
+            $('.delButton').click(function () {
+                $('#editAcct').load("/HouseAccounts/_Delete/" + $(this).data('id'));
+            });
+
+            $('#createButton').click(function () {
+                $('#editAcct').load("/HouseAccounts/_Create/");
+            });
+
+            $('#acctTable').DataTable();
+
+        });
+    </script>
+}

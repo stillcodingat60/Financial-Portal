@@ -5,14 +5,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
-
 <h3>
-    <label>Welcome to HouseHold: </label>
-    @Html.DisplayFor(model => model.HName)
+    <label>Welcome to the @Html.DisplayFor(model => model.HName) HouseHold </label>
+    
 </h3>
 <div class="row">
     <div class="col-lg-6 left centered">
+        <h4>Members in Household</h4>
         <br />
         <table class="table table-bordered table-condensed table-responsive">
 
@@ -45,6 +44,7 @@
         </table>
     </div>
     <div class="col-lg-6 left centered">
+        <h4>Household Accounts</h4>
         <br />
         <table class="table table-bordered table-condensed table-responsive">
 
@@ -69,7 +69,8 @@
                         @Html.DisplayFor(model => item.Balance)
                     </td>
                     <td>
-                        @Html.ActionLink("Enter Trx", "Index", "Transactions", new { HAccount = item.Id }, new { @class = "btn btn-primary" })
+                        @Html.ActionLink("Manage Accts", "Index", "HouseAccounts", null, new { @class = "btn btn-primary" })
+                        @Html.ActionLink("Enter Trx", "Details", "HouseAccounts", new { id = item.Id }, new { @class = "btn btn-primary" })
                     </td>
                 </tr>
             }
@@ -94,7 +95,7 @@
             <br />
             <label>The message will be automatically generated for you.</label>
             <br />
-            <button>
+            <button class="btn btn-primary">
                 Send Invitation
             </button>
         </form>

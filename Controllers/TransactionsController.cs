@@ -16,9 +16,10 @@ namespace Financial_Portal.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Transactions
-        public ActionResult Index(int? HAccount)
-        {                      
-            var transactions = db.Transactions.Include(t => t.Cat).Include(t => t.HAccount);
+        public ActionResult Index(int HAccount)
+        {
+            var accts = db.HAccounts.Find(HAccount);
+            var transactions = db.Transactions.Where(t => t.HAccountId == accts.Id).Include(t => t.HAccount);
             if (transactions != null)
                 return View(transactions.ToList());
             else
@@ -26,28 +27,20 @@ namespace Financial_Portal.Controllers
         }
 
         // GET: Transactions/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Transaction transaction = db.Transactions.Find(id);
-            if (transaction == null)
-            {
-                return HttpNotFound();
-            }
-            return View(transaction);
+        public PartialViewResult _Details(int? id)
+        {            
+            Transaction transaction = db.Transactions.Find(id);         
+            return PartialView(transaction);
         }
 
         // GET: Transactions/Create
-        public ActionResult Create()
+        public PartialViewResult _Create()
         {
             var user = db.Users.Find(User.Identity.GetUserId());
             ViewBag.CatId = new SelectList(db.Categories.Where(p => p.HhId == user.HouseHoldId), "Id", "CName");
             ViewBag.HAccountId = new SelectList(db.HAccounts.Where(q => q.HhId == user.HouseHoldId), "Id", "HAName");
-            ViewBag.Type = new SelectList(new[] { "income", "expense" }, "Type");
-            return View();
+            ViewBag.Type = new SelectList(new[] { "expense", "income" }, "Type");
+            return PartialView();
         }
 
         // POST: Transactions/Create
@@ -66,7 +59,7 @@ namespace Financial_Portal.Controllers
                     hhacct.Balance -= transaction.Amount;
                 db.Transactions.Add(transaction);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details","HouseAccounts", new { id = hhacct.Id });
             }
 
             var user = db.Users.Find(User.Identity.GetUserId());
@@ -77,22 +70,14 @@ namespace Financial_Portal.Controllers
         }
 
         // GET: Transactions/Edit/5
-        public ActionResult Edit(int? id)
+        public PartialViewResult _Edit(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
             Transaction transaction = db.Transactions.Find(id);
-            if (transaction == null)
-            {
-                return HttpNotFound();
-            }
             var user = db.Users.Find(User.Identity.GetUserId());
             ViewBag.CId = new SelectList(db.Categories.Where(p => p.HhId == user.HouseHoldId), "Id", "CName");
-            ViewBag.HAcctId = new SelectList(db.HAccounts.Where(q => q.HhId == user.HouseHoldId), "Id", "HAName");
-            ViewBag.Grype = new SelectList(new[] { "income", "expense" }, "Type");
-            return View(transaction);
+            ViewBag.HAcctId = new SelectList(db.HAccounts.Where(q => q.HhId == user.HouseHoldId), "Id", "HAName"); //had to change the viewbag name != the db.Name otherwise the value in the field being displayed would be the first dropdown item
+            ViewBag.Grype = new SelectList(new[] { "expense", "income" }, "Type");
+            return PartialView(transaction);
         }
 
         // POST: Transactions/Edit/5
@@ -122,7 +107,7 @@ namespace Financial_Portal.Controllers
 
                 db.Entry(transaction).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", "HouseAccounts", new { id = hhacct.Id });
             }
             var user = db.Users.Find(User.Identity.GetUserId());
             ViewBag.CId = new SelectList(db.Categories.Where(p => p.HhId == user.HouseHoldId), "Id", "CName");
@@ -132,22 +117,14 @@ namespace Financial_Portal.Controllers
         }
 
         // GET: Transactions/Delete/5
-        public ActionResult Delete(int? id)
+        public PartialViewResult _Delete(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
             Transaction transaction = db.Transactions.Find(id);
-            if (transaction == null)
-            {
-                return HttpNotFound();
-            }
-            return View(transaction);
+            return PartialView(transaction);
         }
 
         // POST: Transactions/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("_Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
@@ -165,7 +142,7 @@ namespace Financial_Portal.Controllers
 
             db.Transactions.Remove(transaction);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Details","HouseAccounts", new { id = hhacct.Id });
         }
 
         protected override void Dispose(bool disposing)

@@ -103,7 +103,7 @@ namespace Financial_Portal.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Index", "HouseHolds");  //take them to the dashboard for households
+                        return RedirectToAction("Details", "HouseHolds");  //take them to the dashboard for households
                     }
                     //return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:

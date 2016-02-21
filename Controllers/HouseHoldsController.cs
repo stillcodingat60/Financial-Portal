@@ -30,18 +30,22 @@ namespace Financial_Portal.Controllers
         }
 
         // GET: HouseHolds/Details/5
-        public ActionResult Details(int? id)
+        [Authorize]
+        public ActionResult Details()
         {
-            if (id == null)
+            var user = db.Users.Find(User.Identity.GetUserId());
+            if (user.HouseHoldId == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                ViewBag.Message = "You are not a user on this system. Please register first!";
+                return View();
             }
-
-            HouseHold houseHold = db.Households.Include("Users").Include("HAccounts").FirstOrDefault(p => p.Id == id);
-
-            if (houseHold == null)
+           
+            HouseHold houseHold = db.Households.Include("Users").Include("HAccounts").FirstOrDefault(p => p.Id == user.HouseHoldId);
+                                       
+            if(houseHold == null)
             {
-                return HttpNotFound();
+                ViewBag.Message = " Please create or join a household first!";
+                return View(); 
             }
         
             //var searchUsers = db.Users.AsQueryable();                               // this block of code sets up a search for users whose household id
