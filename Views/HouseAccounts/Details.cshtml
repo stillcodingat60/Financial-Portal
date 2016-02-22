@@ -18,7 +18,7 @@
 <p>
     <hr />  
 </p>
-<table class="table stripe cell-border compact" id="myTable">
+<table class="table stripe cell-border compact myTable" id="">
     <thead>
         <tr>
             <th class="centered">
@@ -80,16 +80,13 @@
                     }
                 </td>
                 <td class="centered">
-                    <button data-id="@item.Id" class="btn btn-primary editButton">Edit</button>
-                    @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary" })*@
+                    <button data-id="@item.Id" class="btn btn-primary editButton">Edit</button>                   
                 </td>
                 <td class="centered">
                     <button data-id="@item.Id" class="btn btn-primary delButton">DELETE</button>
-                    @*@Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-primary" })*@
                 </td>
                 <td class="centered">
                     <button data-id="@item.Id" class="btn btn-primary detButton">Details</button>
-                   @* @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-primary" })*@
                 </td>               
             </tr>
         }
@@ -122,7 +119,7 @@
                 $('#insertPartial').load("/Transactions/_Details/" + $(this).data('id'));
             });
 
-            $('#myTable').DataTable();
+            $('.myTable').DataTable();
         });
     </script>
 }

@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Financial_Portal.Models;
+using Microsoft.AspNet.Identity;
 
 namespace Financial_Portal.Controllers
 {
@@ -17,30 +18,27 @@ namespace Financial_Portal.Controllers
         // GET: Categories
         public ActionResult Index()
         {
-            var categories = db.Categories.Include(c => c.Hh);
+            var HhId = Convert.ToInt32(User.Identity.GetHouseHoldId());
+
+            var categories = db.Categories.Where(c => c.HhId == HhId);
             return View(categories.ToList());
         }
 
         // GET: Categories/Details/5
-        public ActionResult Details(int? id)
+        public PartialViewResult _Details(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
             Category category = db.Categories.Find(id);
-            if (category == null)
-            {
-                return HttpNotFound();
-            }
-            return View(category);
+            return PartialView(category);
         }
 
         // GET: Categories/Create
-        public ActionResult Create()
+        public PartialViewResult _Create()
         {
-            ViewBag.HhId = new SelectList(db.Households, "Id", "Id");
-            return View();
+            var HhId = Convert.ToInt32(User.Identity.GetHouseHoldId());
+            ViewBag.HhId = HhId;
+            ViewBag.CId = new SelectList(db.Categories.Where(p => p.HhId == HhId), "Id", "CName");
+            ViewBag.Type = new SelectList(new[] { "expense", "income" }, "Type");
+            return PartialView();
         }
 
         // POST: Categories/Create
@@ -52,6 +50,8 @@ namespace Financial_Portal.Controllers
         {
             if (ModelState.IsValid)
             {
+                //Category newCategory = new Category();
+                //newCategory.HhId = category.HhId;
                 db.Categories.Add(category);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -62,19 +62,11 @@ namespace Financial_Portal.Controllers
         }
 
         // GET: Categories/Edit/5
-        public ActionResult Edit(int? id)
+        public PartialViewResult _Edit(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
             Category category = db.Categories.Find(id);
-            if (category == null)
-            {
-                return HttpNotFound();
-            }
             ViewBag.HhId = new SelectList(db.Households, "Id", "Id", category.HhId);
-            return View(category);
+            return PartialView(category);
         }
 
         // POST: Categories/Edit/5
@@ -95,22 +87,15 @@ namespace Financial_Portal.Controllers
         }
 
         // GET: Categories/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+        public PartialViewResult _Delete(int? id)
+        {            
             Category category = db.Categories.Find(id);
-            if (category == null)
-            {
-                return HttpNotFound();
-            }
-            return View(category);
+            
+            return PartialView(category);
         }
 
         // POST: Categories/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("_Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {

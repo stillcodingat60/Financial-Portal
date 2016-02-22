@@ -13,6 +13,7 @@ namespace Financial_Portal.Models
         public int? CatId { get; set; }
         public int Frequency { get; set; }
         public int HhId { get; set; }
+        public int BAmount { get; set; }
 
         public virtual Category Cat { get; set; }
     }

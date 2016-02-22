@@ -4,43 +4,84 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="row">
+    <div class="col-lg-6">
+        <h3>
+            Index
+            <button class="btn btn-primary right createButton" id="createButton">Create New Category</button>
+        </h3>
 
-<h2>Index</h2>
+        <p>
+            <hr />
+        </p>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Hh.Id)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Type)
-        </th>
-        <th></th>
-    </tr>
+        <table class="table table-bordered table-condensed table-responsive myTable">
+            <thead>
+                <tr>
+                    <th>Household</th>
+                    <th>
+                        Category
+                    </th>
+                    <th>
+                        Type
+                    </th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+            {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelitem => item.Hh.HName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Type)
+                        </td>
+                        <td class="centered">
+                            <button data-id="@item.Id" class="btn btn-primary editButton">Edit</button>
+                        </td>
+                        <td class="centered">
+                            <button data-id="@item.Id" class="btn btn-primary delButton">DELETE</button>
+                        </td>
+                        <td class="centered">
+                            <button data-id="@item.Id" class="btn btn-primary detButton">Details</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-lg-6" id="insertPartials">
+    </div>
+</div>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Hh.Id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Type)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.createButton').click(function () {
+                $('#insertPartials').load("/Categories/_Create/");
+            });
+
+            $('.editButton').click(function () {
+                $('#insertPartials').load("/Categories/_Edit/" + $(this).data('id'));
+            });
+
+            $('.delButton').click(function () {
+                $('#insertPartials').load("/Categories/_Delete/" + $(this).data('id'));
+            });
+
+            $('.detButton').click(function () {
+                $('#insertPartials').load("/Categories/_Details/" + $(this).data('id'));
+            });
+
+            $('.myTable').DataTable();
+        });
+    </script>
 }
-
-</table>

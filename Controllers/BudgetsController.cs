@@ -17,8 +17,13 @@ namespace Financial_Portal.Controllers
         // GET: Budgets
         public ActionResult Index()
         {
-            var budgets = db.Budgets.Include(b => b.Cat);
-            return View(budgets.ToList());
+            var HhId = Convert.ToInt32(User.Identity.GetHouseHoldId());
+            var budgets = db.Budgets.Where(b => b.HhId == HhId);
+            if (budgets != null)
+                return View(budgets.ToList());
+            else
+                ViewBag.Message("You need to Create a budget first");
+            return View();
         }
 
         // GET: Budgets/Details/5
@@ -37,10 +42,28 @@ namespace Financial_Portal.Controllers
         }
 
         // GET: Budgets/Create
-        public ActionResult Create()
+        public ActionResult CreateNewBudget()
         {
-            ViewBag.CatId = new SelectList(db.Categories, "Id", "CName");
-            return View();
+            var HhId = Convert.ToInt32(User.Identity.GetHouseHoldId());
+            var category = db.Categories.Where(c => c.HhId == HhId);
+            var budgets = new List<Budget>();
+            foreach (var catg in category)
+            {
+                var budget = new Budget()
+                {
+                    HhId = HhId,
+                    Type = catg.Type,
+                    BName = catg.CName,
+                    Frequency = 12,
+                    CatId = catg.Id
+                };
+                budgets.Add(budget);
+            }
+            db.Budgets.AddRange(budgets);
+            db.SaveChanges();
+            
+            //ViewBag.CatId = new SelectList(db.Categories, "Id", "CName");
+            return RedirectToAction("Index");
         }
 
         // POST: Budgets/Create

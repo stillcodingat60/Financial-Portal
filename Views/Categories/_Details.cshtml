@@ -1,0 +1,27 @@
+﻿@model Financial_Portal.Models.Category
+
+<h2 class="centered">Details</h2>
+
+<div>
+    <h4 class="centered">Category</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        
+        <dt>
+            Category Name
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CName)
+        </dd>
+        <dt>
+            Type
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+
+    </dl>
+</div>
+<p>
+        @Html.ActionLink("Close", "Index", "Categories", null, new { @class = "btn btn-primary" })
+</p>

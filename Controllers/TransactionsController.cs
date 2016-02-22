@@ -112,7 +112,7 @@ namespace Financial_Portal.Controllers
             var user = db.Users.Find(User.Identity.GetUserId());
             ViewBag.CId = new SelectList(db.Categories.Where(p => p.HhId == user.HouseHoldId), "Id", "CName");
             ViewBag.HAcctId = new SelectList(db.HAccounts.Where(q => q.HhId == user.HouseHoldId), "Id", "HAName");
-            ViewBag.Grype = new SelectList(new[] { "income", "expense" }, "Type");
+            ViewBag.Grype = new SelectList(new[] { "expense", "income" }, "Type");
             return View(transaction);
         }
 

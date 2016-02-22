@@ -61,7 +61,8 @@
                 <li class="mt">
                     <a href="#">
                         <i class="fa fa-dashboard"></i>
-                        <span>@Html.ActionLink("Home", "Index", "Home")</span>
+                        
+                        @Html.ActionLink("Home", "Index", "Home")
                     </a>
                 </li>
 
@@ -78,7 +79,7 @@
                 </li>
 
                 <li class="sub-menu">
-                    <a class="active" href="javascript:;">
+                    <a href="javascript:;">
                         <i class="fa fa-cogs"></i>
                         <span>HouseHolds</span>
                     </a>
@@ -92,21 +93,21 @@
                 <li class="sub-menu">
                     <a href="javascript:;">
                         <i class="fa fa-book"></i>
-                        <span>Extra Pages</span>
+                        <span>Categories</span>
                     </a>
                     <ul class="sub">
-                        <li><a href="blank.html">Blank Page</a></li>
-                        <li><a href="login.html">Login</a></li>
-                        <li><a href="lock_screen.html">Lock Screen</a></li>
+                        <li>@Html.ActionLink("Index", "Index", "Categories")</li>
+                        <li>@Html.ActionLink("Index", "Index", "Categories")</li>
+                        <li>@Html.ActionLink("Index", "Index", "Categories")</li>
                     </ul>
                 </li>
                 <li class="sub-menu">
                     <a href="javascript:;">
                         <i class="fa fa-tasks"></i>
-                        <span>Forms</span>
+                        <span>Budgets</span>
                     </a>
                     <ul class="sub">
-                        <li><a href="form_component.html">Form Components</a></li>
+                        <li>@Html.ActionLink("Index", "Index", "Budgets")</li>
                     </ul>
                 </li>
                 <li class="sub-menu">

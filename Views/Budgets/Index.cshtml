@@ -5,54 +5,59 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h3>
+    Index
+    @Html.ActionLink("Create New Budget", "CreateNewBudget", "Budgets", null, new { @class = "btn btn-primary", @id = "createButton" })
+</h3>
+@ViewBag.message
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Cat.CName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Type)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Frequency)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.HhId)
-        </th>
-        <th></th>
-    </tr>
+<table class="table table-bordered table-striped table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Cat.CName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Frequency)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HhId)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Cat.CName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Type)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Frequency)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.HhId)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
-
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cat.CName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Frequency)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HhId)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
