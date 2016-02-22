@@ -5,14 +5,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@ViewBag.message
-
 <div class="row">
     <div class="col-lg-6">
         <h3>
             The @ViewBag.HName.HName Household Budget
             @Html.ActionLink("Create New Budget", "CreateNewBudget", "Budgets", null, new { @class = "btn btn-primary", @id = "createButton" })
         </h3>
+            
+             <h4 class="text-danger centered">@ViewBag.Message</h4>
+        
         <hr />
         <table class="table table-bordered table-striped table-hover myTable">
             <thead>
@@ -74,15 +75,15 @@
             //});
 
             $('.editButton').click(function () {
-                $('#insertPartials').load("/Categories/_Edit/" + $(this).data('id'));
+                $('#insertPartials').load("/Budgets/_Edit/" + $(this).data('id'));
             });
 
             $('.delButton').click(function () {
-                $('#insertPartials').load("/Categories/_Delete/" + $(this).data('id'));
+                $('#insertPartials').load("/Budgets/_Delete/" + $(this).data('id'));
             });
 
             $('.detButton').click(function () {
-                $('#insertPartials').load("/Categories/_Details/" + $(this).data('id'));
+                $('#insertPartials').load("/Budgets/_Details/" + $(this).data('id'));
             });
 
             $('.myTable').DataTable();

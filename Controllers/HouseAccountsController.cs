@@ -72,6 +72,7 @@ namespace Financial_Portal.Controllers
                 beginBal.Descript = "Beginning Balance";
                 beginBal.Created = DateTime.Now;
                 beginBal.HAccountId = houseAccount.Id;
+                beginBal.Reconcile = true;
                 beginBal.Type = "income";
 
                 db.Transactions.Add(beginBal);

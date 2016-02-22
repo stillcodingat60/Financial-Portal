@@ -66,6 +66,7 @@ namespace Financial_Portal.Controllers
         {
             Category category = db.Categories.Find(id);
             ViewBag.HhId = new SelectList(db.Households, "Id", "Id", category.HhId);
+            ViewBag.Grype = new SelectList(new[] { "expense", "income" }, "Type");
             return PartialView(category);
         }
 

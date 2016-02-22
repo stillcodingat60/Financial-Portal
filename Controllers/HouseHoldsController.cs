@@ -144,6 +144,7 @@ namespace Financial_Portal.Controllers
         }
 
         // POST: HouseHolds/Delete/5
+        [AuthorizeHouseHoldRequired]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string Y, string N)

@@ -20,12 +20,12 @@ namespace Financial_Portal.Controllers
             var HhId = Convert.ToInt32(User.Identity.GetHouseHoldId());
             var budgets = db.Budgets.Where(b => b.HhId == HhId);
             ViewBag.HName = db.Households.Find(HhId);
-            var bHhId = db.Budgets.Find(HhId);
+            var bHhId = db.Budgets.FirstOrDefault(b => b.HhId == HhId);
             if (bHhId != null)
                 return View(budgets.ToList());
             else
-                ViewBag.Message("You need to Create a budget first");
-            return View();
+                ViewBag.Message="You need to Create a budget first!";
+            return View(budgets.ToList());
         }
 
         // GET: Budgets/Details/5
@@ -38,17 +38,17 @@ namespace Financial_Portal.Controllers
         // GET: Budgets/Create
         public ActionResult CreateNewBudget()
         {
-            var HhId = Convert.ToInt32(User.Identity.GetHouseHoldId());
-            var category = db.Categories.Where(c => c.HhId == HhId);
+            var HId = Convert.ToInt32(User.Identity.GetHouseHoldId());
+            var category = db.Categories.Where(c => c.HhId == HId);
             var budgets = new List<Budget>();
             foreach (var catg in category)
             {
                 var budget = new Budget()
                 {
-                    HhId = HhId,
+                    HhId = HId,
                     Type = catg.Type,
                     BName = catg.CName,
-                    Frequency = 12,
+                    Frequency = "Monthly",
                     CatId = catg.Id
                 };
                 budgets.Add(budget);
@@ -84,6 +84,7 @@ namespace Financial_Portal.Controllers
             Budget budget = db.Budgets.Find(id);
             
             ViewBag.CatId = new SelectList(db.Categories, "Id", "CName", budget.CatId);
+            ViewBag.Grype = new SelectList(new[] { "expense", "income" }, "Type");
             return PartialView(budget);
         }
 
@@ -101,6 +102,7 @@ namespace Financial_Portal.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.CatId = new SelectList(db.Categories, "Id", "CName", budget.CatId);
+            ViewBag.Grype = new SelectList(new[] { "expense", "income" }, "Type");            
             return View(budget);
         }
 
