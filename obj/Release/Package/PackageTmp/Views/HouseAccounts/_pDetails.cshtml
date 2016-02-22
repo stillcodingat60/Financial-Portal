@@ -1,11 +1,5 @@
-﻿@model IEnumerable<Financial_Portal.Models.Transaction>
+﻿@model IEnumerable< Financial_Portal.Models.Transaction>
 
-@{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-<h2>Index</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create", new { @class = "btn btn-primary" })
@@ -62,14 +56,14 @@
                     @Html.DisplayFor(modelItem => item.Type)
                 </td>
                 <td class="centered">
-                    @if(item.Type == "expense" && item.Amount > 0)
+                    @if (item.Type == "expense" && item.Amount > 0)
                     {
                         <p class="red">@item.Amount</p>
                     }
                     else
                     {
                         <p>@item.Amount</p>
-                    }                    
+                    }
                 </td>
                 <td class="centered">
                     @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary" })

@@ -1,0 +1,33 @@
+﻿@model Financial_Portal.Models.Category
+
+<h2 class="centered">Delete</h2>
+<div>
+    <h4 class="centered">Category</h4>
+    <hr />
+    <h4 class="centered">Are you sure you want to delete this Category?</h4>
+    <dl class="dl-horizontal">
+        <dt>
+            Category Name
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CName)
+        </dd>
+        <dt>
+            Account Type
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+    </dl>
+        @using (Html.BeginForm("_Delete", "Categories"))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <div class="col-md-offset-12 centered">
+                    <input type="submit" value="Delete" class="btn btn-default" /> |
+                    @Html.ActionLink("Close", "Index", "Categories", null, new { @class = "btn btn-primary" })
+                </div>
+            </div>
+        }    
+</div>

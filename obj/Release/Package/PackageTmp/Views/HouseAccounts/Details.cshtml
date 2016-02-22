@@ -1,5 +1,4 @@
 ﻿@model Financial_Portal.Models.HouseAccount
-
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -8,28 +7,119 @@
 <h2>Details</h2>
 
 <div>
-    <h4>HouseAccount</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Hh.Id)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Hh.Id)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.HAName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.HAName)
-        </dd>
-
-    </dl>
+    <h4>
+        Account: @Html.DisplayFor(model => model.HAName) <br />
+        Balance: $ @Html.DisplayFor(model => model.Balance)
+        <button class="btn btn-primary right" id="createButton">Create New Entry</button>
+    </h4>
+        
 </div>
+
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    <hr />  
 </p>
+<table class="table stripe cell-border compact myTable" id="">
+    <thead>
+        <tr>
+            <th class="centered">
+                Category
+            </th>
+            <th class="centered">
+                Account
+            </th>
+            <th class="centered">
+                Date
+            </th>
+            <th class="centered">
+                Description
+            </th>
+            <th class="centered">
+                Reconcile
+            </th>
+            <th class="centered">
+                Type
+            </th>
+            <th class="centered">
+                Amount
+            </th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Transactions)
+            {
+            <tr>
+                <td class="centered">
+                    @Html.DisplayFor(modelItem => item.Cat.CName)
+                </td>
+                <td class="centered">
+                    @Html.DisplayFor(modelItem => item.HAccount.HAName)
+                </td>
+                <td class="centered">
+                    @item.Created.ToString("MM/dd/yyyy")
+                </td>
+                <td class="centered">
+                    @Html.DisplayFor(modelItem => item.Descript)
+                </td>
+                <td class="centered">
+                    @Html.DisplayFor(modelItem => item.Reconcile)
+                </td>
+                <td class="centered">
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+                <td class="centered">
+                    @if (item.Type == "expense" && item.Amount > 0)
+                    {
+                        <p class="red">@item.Amount</p>
+                    }
+                    else
+                    {
+                        <p>@item.Amount</p>
+                    }
+                </td>
+                <td class="centered">
+                    <button data-id="@item.Id" class="btn btn-primary editButton">Edit</button>                   
+                </td>
+                <td class="centered">
+                    <button data-id="@item.Id" class="btn btn-primary delButton">DELETE</button>
+                </td>
+                <td class="centered">
+                    <button data-id="@item.Id" class="btn btn-primary detButton">Details</button>
+                </td>               
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="row">
+    <div class="col-lg-offset-4 col-lg-4 centered" id="insertPartial">
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#createButton').click(function () {
+                $('#insertPartial').load("/Transactions/_Create/");
+            });
+
+            $('.editButton').click(function () {
+                $('#insertPartial').load("/Transactions/_Edit/" + $(this).data('id'));
+            });
+
+            $('.delButton').click(function () {
+                $('#insertPartial').load("/Transactions/_Delete/" + $(this).data('id'));
+            });
+
+            $('.detButton').click(function () {
+                $('#insertPartial').load("/Transactions/_Details/" + $(this).data('id'));
+            });
+
+            $('.myTable').DataTable();
+        });
+    </script>
+}

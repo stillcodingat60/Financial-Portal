@@ -3,14 +3,15 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - MyFinancial Portal</title>
     @Styles.Render("~/Content/css")
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css" />
     @Scripts.Render("~/bundles/modernizr")
     <link rel="stylesheet" href="~/Content/font-awesome.css">
-
-</head>
+    </head>
 <body>
     <!--header start-->
+
     <header class="header black-bg">
         <div class="sidebar-toggle-box">
             <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
@@ -22,20 +23,20 @@
             <!--  notification start -->
             <ul class="nav top-menu">
                 <!-- settings start -->
-                <li class="dropdown">
+                @*<li class="dropdown">
                     <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
                         <i class="fa fa-tasks"></i>
                         <span class="badge bg-theme">4</span>
                     </a>                    
-                </li>
+                </li>*@
                 <!-- settings end -->
                 <!-- inbox dropdown start-->
-                <li id="header_inbox_bar" class="dropdown">
+                @*<li id="header_inbox_bar" class="dropdown">
                     <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
                         <i class="fa fa-envelope-o"></i>
                         <span class="badge bg-theme">5</span>
                     </a>
-                 </li>
+                 </li>*@
                 <!-- inbox dropdown end -->
             </ul>
             <!--  notification end -->
@@ -54,15 +55,15 @@
             <!-- sidebar menu start-->
             <ul class="sidebar-menu" id="nav-accordion">
 
-                <p class="centered"><img src="../Content/img/ui-sam.jpg" class="img-circle" width="60"></p>
+                <p class="centered"><img src="~/Content/img/ui-sam.jpg" class="img-circle" width="60"></p>
                 <h5 class="centered">Menu</h5>
 
                 <li class="mt">
                     <a href="#">
                         <i class="fa fa-dashboard"></i>
-                        <span>Home</span>
+                        
+                        @Html.ActionLink("Home", "Index", "Home")
                     </a>
-                    
                 </li>
 
                 <li class="sub-menu">
@@ -83,29 +84,30 @@
                         <span>HouseHolds</span>
                     </a>
                     <ul class="sub">
-                        <li>@Html.ActionLink("Join", "Join", "HouseHolds")</li>
-                        <li>@Html.ActionLink("HouseHold", "Details/1", "HouseHolds")</li>
+                        <li>@Html.ActionLink("HouseHold", "Details", "HouseHolds")</li>
                         <li>@Html.ActionLink("Dashboard", "Index", "HouseHolds")</li>
+                        <li>@Html.ActionLink("Accounts", "Index", "HouseAccounts")</li>
+                        <li>@Html.ActionLink("Transactions", "Index", "Transactions")</li>
                     </ul>
                 </li>
                 <li class="sub-menu">
-                    <a class="active" href="javascript:;">
+                    <a href="javascript:;">
                         <i class="fa fa-book"></i>
-                        <span>Extra Pages</span>
+                        <span>Categories</span>
                     </a>
                     <ul class="sub">
-                        <li class="active"><a href="blank.html">Blank Page</a></li>
-                        <li><a href="login.html">Login</a></li>
-                        <li><a href="lock_screen.html">Lock Screen</a></li>
+                        <li>@Html.ActionLink("Index", "Index", "Categories")</li>
+                        <li>@Html.ActionLink("Index", "Index", "Categories")</li>
+                        <li>@Html.ActionLink("Index", "Index", "Categories")</li>
                     </ul>
                 </li>
                 <li class="sub-menu">
                     <a href="javascript:;">
                         <i class="fa fa-tasks"></i>
-                        <span>Forms</span>
+                        <span>Budgets</span>
                     </a>
                     <ul class="sub">
-                        <li><a href="form_component.html">Form Components</a></li>
+                        <li>@Html.ActionLink("Index", "Index", "Budgets")</li>
                     </ul>
                 </li>
                 <li class="sub-menu">
@@ -134,20 +136,22 @@
         </div>
     </aside>
     <!--sidebar end-->
-                @Html.Partial("_LoginPartial")
-            </div>
+
+    @Html.Partial("_LoginPartial")
+
+    <div class="container-fluid body-content">
+        @RenderBody()
+        
+        <br /><br />
+
+        <div class="footer col-lg-12 centered">
+                <p>&copy; @DateTime.Now.Year - Jamie McConnell</p>
         </div>
     </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Jamie McConnell</p>
-        </footer>
-    </div>
-
+    
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

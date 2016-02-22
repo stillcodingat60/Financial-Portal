@@ -3,12 +3,6 @@
     padding-bottom: 20px;
 }
 
-/* Set padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
-}
-
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
 */
@@ -279,13 +273,23 @@ blockquote cite:before {
     margin-top: -65px;
 }
 
+/* Modals */
+
+.modal-body {
+    background-color:white;
+}
+
+.control-label{
+    color:darkblue;
+}
+
 /* Links */
 a {
     color: white;
     word-wrap: break-word;
     -webkit-transition: color 0.1s ease-in, background 0.1s ease-in;
     -moz-transition: color 0.1s ease-in, background 0.1s ease-in;
-    -ms-transition: color 0.1s ease-in, background 0.1s ease-in;
+    
     -o-transition: color 0.1s ease-in, background 0.1s ease-in;
     transition: color 0.1s ease-in, background 0.1s ease-in;
 }
@@ -301,7 +305,7 @@ a:before,
 a:after {
         -webkit-transition: color 0.1s ease-in, background 0.1s ease-in;
         -moz-transition: color 0.1s ease-in, background 0.1s ease-in;
-        -ms-transition: color 0.1s ease-in, background 0.1s ease-in;
+        
         -o-transition: color 0.1s ease-in, background 0.1s ease-in;
         transition: color 0.1s ease-in, background 0.1s ease-in;
     }
@@ -324,13 +328,9 @@ a:after {
     background-position: center center;
     min-height: 650px;
     width: 100%;
-    -webkit-background-size: 100%;
-    -moz-background-size: 100%;
-    -o-background-size: 100%;
+    
     background-size: 100%;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
+    
     background-size: cover;
 }
 
@@ -403,7 +403,6 @@ a:after {
     background: #f2f2f2;
     margin: 10px;
     height: auto;
-    max-height:auto;
     vertical-align: top;
 }
 
@@ -412,7 +411,6 @@ a:after {
     background: inherit;
     margin: 10px;
     height: auto;
-    max-height:auto;
     vertical-align: top;
 }
 

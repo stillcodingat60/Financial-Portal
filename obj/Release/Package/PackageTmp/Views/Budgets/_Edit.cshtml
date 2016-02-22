@@ -1,13 +1,8 @@
 ﻿@model Financial_Portal.Models.Budget
 
-@{
-    ViewBag.Title = "Edit";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
 <h2>Edit</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit","Budgets"))
 {
     @Html.AntiForgeryToken()
     
@@ -58,8 +53,9 @@
         </div>
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+            <div class="col-md-offset-4 col-md-8">
+                <input type="submit" value="Save" class="btn btn-default" /> |
+                @Html.ActionLink("Close", "Index", "Categories", null, new { @class = "btn btn-primary" })
             </div>
         </div>
     </div>

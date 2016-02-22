@@ -19,6 +19,15 @@ body {
     font-size:13px;
 }
 
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    margin-left: 190px;
+    padding-top:60px;
+    padding-left: 30px;
+    padding-right: 15px;
+    margin-right:10px;
+}
+
 ul li {
     list-style: none;
 }
@@ -56,6 +65,26 @@ a, a:hover, a:focus {
 	-webkit-border-radius: 20px;
 }
 
+.btn {
+    font-size: 12px;
+    padding: 2px;
+    color: #424a5d;
+    background: inherit;
+}
+
+#editAcct {
+    margin: 90px 10px 0 0;
+}
+
+.red {
+    color: red;
+}
+
+#createButton {
+    font-size:16px;
+    float:right;
+}
+
 .accordion-heading .accordion-toggle {
 	display: block;
 	cursor: pointer;
@@ -68,7 +97,6 @@ a, a:hover, a:focus {
 	outline: none !important;
 	text-decoration: none;
 }	
-
 
 
 /*Theme Backgrounds*/

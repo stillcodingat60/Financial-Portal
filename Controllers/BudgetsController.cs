@@ -19,7 +19,9 @@ namespace Financial_Portal.Controllers
         {
             var HhId = Convert.ToInt32(User.Identity.GetHouseHoldId());
             var budgets = db.Budgets.Where(b => b.HhId == HhId);
-            if (budgets != null)
+            ViewBag.HName = db.Households.Find(HhId);
+            var bHhId = db.Budgets.Find(HhId);
+            if (bHhId != null)
                 return View(budgets.ToList());
             else
                 ViewBag.Message("You need to Create a budget first");
@@ -27,18 +29,10 @@ namespace Financial_Portal.Controllers
         }
 
         // GET: Budgets/Details/5
-        public ActionResult Details(int? id)
+        public PartialViewResult _Details(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
             Budget budget = db.Budgets.Find(id);
-            if (budget == null)
-            {
-                return HttpNotFound();
-            }
-            return View(budget);
+            return PartialView(budget);
         }
 
         // GET: Budgets/Create
@@ -85,19 +79,12 @@ namespace Financial_Portal.Controllers
         }
 
         // GET: Budgets/Edit/5
-        public ActionResult Edit(int? id)
+        public PartialViewResult _Edit(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
             Budget budget = db.Budgets.Find(id);
-            if (budget == null)
-            {
-                return HttpNotFound();
-            }
+            
             ViewBag.CatId = new SelectList(db.Categories, "Id", "CName", budget.CatId);
-            return View(budget);
+            return PartialView(budget);
         }
 
         // POST: Budgets/Edit/5
@@ -118,22 +105,14 @@ namespace Financial_Portal.Controllers
         }
 
         // GET: Budgets/Delete/5
-        public ActionResult Delete(int? id)
+        public PartialViewResult _Delete(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
             Budget budget = db.Budgets.Find(id);
-            if (budget == null)
-            {
-                return HttpNotFound();
-            }
-            return View(budget);
+            return PartialView(budget);
         }
 
         // POST: Budgets/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("_Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {

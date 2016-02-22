@@ -1,0 +1,35 @@
+﻿@model Financial_Portal.Models.HouseAccount
+
+<h2>Delete</h2>
+
+@using (Html.BeginForm())
+{
+<div>
+    <h4>HouseAccount</h4>
+    <hr />
+    <dl>
+        <dt>
+            Account Name
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.HAName)
+        </dd>
+        <dt>
+            Current Balance
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Balance)
+        </dd>
+
+    </dl>
+
+
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <h3>Are you sure you want to delete this?</h3>
+            <input type="submit" value="Del" class="btn btn-primary" /> |
+            @Html.ActionLink("Close", "Index", Model.Id, new { @class = "btn btn-primary" })
+        </div>
+</div>
+}

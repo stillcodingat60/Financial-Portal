@@ -381,10 +381,10 @@
     <Content Include="Views\Categories\_Details.cshtml" />
     <Content Include="Views\Categories\_Edit.cshtml" />
     <Content Include="Views\Categories\Index.cshtml" />
-    <Content Include="Views\Budgets\Create.cshtml" />
-    <Content Include="Views\Budgets\Delete.cshtml" />
-    <Content Include="Views\Budgets\Details.cshtml" />
-    <Content Include="Views\Budgets\Edit.cshtml" />
+    <Content Include="Views\Budgets\_Create.cshtml" />
+    <Content Include="Views\Budgets\_Delete.cshtml" />
+    <Content Include="Views\Budgets\_Details.cshtml" />
+    <Content Include="Views\Budgets\_Edit.cshtml" />
     <Content Include="Views\Budgets\Index.cshtml" />
     <Content Include="Views\HouseAccounts\_Create.cshtml" />
     <Content Include="Views\HouseAccounts\_Delete.cshtml" />

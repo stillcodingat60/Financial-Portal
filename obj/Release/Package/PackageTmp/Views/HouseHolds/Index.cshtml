@@ -31,9 +31,9 @@
         </td>
 
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=Model.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=Model.Id })
+            @Html.ActionLink("Edit", "Edit", new { id=Model.Id }, new { @class = "btn btn-primary" }) |
+            @Html.ActionLink("Details", "Details", new { id=Model.Id }, new { @class = "btn btn-primary" }) |
+            @Html.ActionLink("Delete", "Delete", new { id=Model.Id }, new { @class = "btn btn-primary" })
         </td>
     </tr>
 </table>
@@ -60,7 +60,7 @@
             <br /> <br /><br />
             <label >The message will be automatically generated for you.</label>
             <br /> <br />
-            <button>
+            <button class="btn btn-primary">
                 Send Invitation
             </button>
         </div>
