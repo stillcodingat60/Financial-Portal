@@ -45,13 +45,13 @@
                     Passwords must be 6 characters in length, have at least one Upppercase, numeric, and 1 special character
                 </p>
                 <p>
-                    @Html.ActionLink("Register as a new user", "Register")
+                    @Html.ActionLink("Register as a new user", "Register", null, new { @class = "btn btn-primary" })
                 </p>
                 @*Enable this once you have account confirmation enabled for password reset functionality*@
-                    <p>
-                        @Html.ActionLink("Forgot your password?", "ForgotPassword")
-                    </p>
-            }
+                <p>
+                    @Html.ActionLink("Forgot your password?", "ForgotPassword", null, new { @class = "btn btn-primary" })
+                </p>
+        }
         </section>
     </div>
     <div class="col-md-4">

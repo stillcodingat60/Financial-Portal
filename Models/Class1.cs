@@ -20,4 +20,10 @@ namespace Financial_Portal.Models
         public string LName { get; set; }
 
     }
+
+    public class BankBalance
+    {
+        public HouseAccount Account { get; set; }
+        public decimal BankBal { get; set; }
+    }
 }

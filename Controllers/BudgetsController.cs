@@ -59,13 +59,24 @@ namespace Financial_Portal.Controllers
             //ViewBag.CatId = new SelectList(db.Categories, "Id", "CName");
             return RedirectToAction("Index");
         }
+        // GET: Budgets/Create
+        public PartialViewResult _Add()
+        {
+            var HhId = Convert.ToInt32(User.Identity.GetHouseHoldId());
+            ViewBag.HhId = HhId;
+            Budget budget = new Budget();
+            ViewBag.Type = new SelectList(new[] { "expense", "income" }, "Type");
+            ViewBag.CatId = new SelectList(db.Categories.Where(p => p.HhId == HhId), "Id", "CName");
+
+            return PartialView(budget);
+        }
 
         // POST: Budgets/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Type,BName,CatId,Frequency,HhId")] Budget budget)
+        public ActionResult Create([Bind(Include = "Id,Type,BName,CatId,Frequency,HhId,BAmount")] Budget budget)
         {
             if (ModelState.IsValid)
             {
@@ -93,7 +104,7 @@ namespace Financial_Portal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Type,BName,CatId,Frequency,HhId")] Budget budget)
+        public ActionResult Edit([Bind(Include = "Id,Type,BName,CatId,Frequency,HhId,BAmount")] Budget budget)
         {
             if (ModelState.IsValid)
             {

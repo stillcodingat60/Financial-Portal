@@ -9,7 +9,8 @@
 <div>
     <h4>
         Account: @Html.DisplayFor(model => model.HAName) <br />
-        Balance: $ @Html.DisplayFor(model => model.Balance)
+        Available Balance: $ @Html.DisplayFor(model => model.Balance)<br />
+        Bank Balance: $@ViewBag.bankBal
         <button class="btn btn-primary right" id="createButton">Create New Entry</button>
     </h4>
         
@@ -44,8 +45,7 @@
             </th>
             <th></th>
             <th></th>
-            <th></th>
-        </tr>
+       </tr>
     </thead>
     <tbody>
         @foreach (var item in Model.Transactions)
@@ -85,9 +85,6 @@
                 <td class="centered">
                     <button data-id="@item.Id" class="btn btn-primary delButton">DELETE</button>
                 </td>
-                <td class="centered">
-                    <button data-id="@item.Id" class="btn btn-primary detButton">Details</button>
-                </td>               
             </tr>
         }
     </tbody>
@@ -119,7 +116,10 @@
                 $('#insertPartial').load("/Transactions/_Details/" + $(this).data('id'));
             });
 
-            $('.myTable').DataTable();
+            $('.myTable').DataTable({
+                "order": [[2, "asc"]]
+            });
+
         });
     </script>
 }

@@ -433,7 +433,7 @@ a:after {
 
 
 @media screen and (max-width:1050px), screen and (max-device-width:1050px) {
-    body .header {
+    body-content .header {
         background-attachment: scroll;
     }
 }

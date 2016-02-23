@@ -8,7 +8,7 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Cat.CName)
+            Category Name
         </dt>
 
         <dd>
@@ -16,7 +16,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Type)
+            Budget Type
         </dt>
 
         <dd>
@@ -24,7 +24,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.BName)
+            Budget Name
         </dt>
 
         <dd>
@@ -32,29 +32,21 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Frequency)
+            Budget Frequency
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Frequency)
         </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.HhId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.HhId)
-        </dd>
-
     </dl>
 
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
+            <div class="col-md-offset-4 col-md-8">
+                <input type="submit" value="Delete" class="btn btn-default" /> |
+                @Html.ActionLink("Close", "Index", "Categories", null, new { @class = "btn btn-primary" })
+            </div>
     }
 </div>

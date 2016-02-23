@@ -7,11 +7,10 @@
 
 <div class="row">
     <div class="col-lg-6">
-        <h3>
-            The @ViewBag.HName.HName Household Budget
-            @Html.ActionLink("Create New Budget", "CreateNewBudget", "Budgets", null, new { @class = "btn btn-primary", @id = "createButton" })
-        </h3>
-            
+        <h3>The @ViewBag.HName.HName Household Budget</h3>
+            <button class="btn btn-primary addButton">Add New Budget Item</button>
+            @Html.ActionLink("Create New Budget", "CreateNewBudget", "Budgets", null, new { @class = "btn btn-primary", @id = "createButton" })<br />
+
              <h4 class="text-danger centered">@ViewBag.Message</h4>
         
         <hr />
@@ -30,7 +29,9 @@
                     <th>
                         Frequency
                     </th>
-
+                    <th>
+                        Monthly Budget
+                    </th>
                     <th></th>
                 </tr>
             </thead>
@@ -51,11 +52,12 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.Frequency)
                         </td>
-
                         <td>
+                            @Html.DisplayFor(modelItem => item.BAmount)
+                        </td>
+                        <td class="centered">
                             <button data-id="@item.Id" class="btn btn-primary editButton">Edit</button> |
-                            <button data-id="@item.Id" class="btn btn-primary delButton">DELETE</button> |
-                            <button data-id="@item.Id" class="btn btn-primary detButton">Details</button>
+                            <button data-id="@item.Id" class="btn btn-primary delButton">DELETE</button>
                         </td>
                     </tr>
                 }
@@ -70,9 +72,9 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
-            //$('.createButton').click(function () {
-            //    $('#insertPartials').load("/Categories/_Create/");
-            //});
+            $('.addButton').click(function () {
+                $('#insertPartials').load("/Budgets/_Add/");
+            });
 
             $('.editButton').click(function () {
                 $('#insertPartials').load("/Budgets/_Edit/" + $(this).data('id'));
@@ -80,10 +82,6 @@
 
             $('.delButton').click(function () {
                 $('#insertPartials').load("/Budgets/_Delete/" + $(this).data('id'));
-            });
-
-            $('.detButton').click(function () {
-                $('#insertPartials').load("/Budgets/_Details/" + $(this).data('id'));
             });
 
             $('.myTable').DataTable();

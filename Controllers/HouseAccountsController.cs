@@ -21,28 +21,52 @@ namespace Financial_Portal.Controllers
         {
             //var user = db.Users.Find(User.Identity.GetUserId());
             var HhId = Convert.ToInt32(User.Identity.GetHouseHoldId());
+           
+            var accountsHhId = db.HAccounts.Where(p => p.HhId == HhId); //a listing of all accounts for this household
+                        
+            var house = db.Households.Find(HhId);
 
-            var searchAccts = db.HAccounts.AsQueryable();                        // this block of code sets up a search for users whose household id
-            searchAccts = searchAccts.Where(p => p.HhId == HhId);                // matches the currently passed HouseHold id
-            var hAccounts = searchAccts.OrderByDescending(p => p.HAName).ToList();  // and returns the listing to the view
+            var BalList = from acc in house.HAccounts
+                       let sum = (from tr in acc.Transactions
+                                  where tr.Reconcile == true
+                                  select tr.Amount).DefaultIfEmpty().Sum()
 
-            //var hAccounts = db.HAccounts.Include(h => h.Hh);
+                       select new BankBalance()
+                       {
+                           Account = acc,
+                           BankBal = sum
+                       };
 
-            return View(hAccounts.ToList());
+            //var searchAccts = db.HAccounts.AsQueryable();         // this block of code sets up a search for users whose household id
+            //searchAccts = searchAccts.Where(p => p.HhId == HhId);                // matches the currently passed HouseHold id
+            //var hAccounts = searchAccts.OrderByDescending(p => p.HAName).ToList();  // and returns the listing to the view
+
+            return View(BalList);
         }
 
         // GET: HouseAccounts/Details/5
         public ActionResult Details(int? id)
         {
-            if(id == null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            
+
             HouseAccount houseAccount = db.HAccounts.Find(id);
-                          
-            var trx = db.Transactions.Where(t => t.HAccountId == houseAccount.Id).Include(t=>t.Cat);
-            
+
+            var trx = db.Transactions.Where(t => t.HAccountId == houseAccount.Id).Include(t => t.Cat);
+            decimal bankBal = 0;
+            foreach (var rec in trx)
+            {
+                if (rec.Reconcile == true)
+                {
+                    if (rec.Type == "income")
+                        bankBal += rec.Amount;
+                    else
+                        bankBal -= rec.Amount;
+                }
+            }
+            ViewBag.bankBal = bankBal;
             return View(houseAccount);
         }
 
@@ -51,7 +75,7 @@ namespace Financial_Portal.Controllers
         {
             var HhId = Convert.ToInt32(User.Identity.GetHouseHoldId());
             ViewBag.HhId = HhId;                //need the Household Id because the new account doesn't have any ref to the household
-            
+
             return PartialView();
         }
 
@@ -66,21 +90,21 @@ namespace Financial_Portal.Controllers
             {
                 var account = db.HAccounts.FirstOrDefault(t => t.HAName == t.HAName);
                 if (account != null)
-                { 
-                Transaction beginBal = new Transaction();
-                beginBal.Amount = houseAccount.Balance;
-                beginBal.Descript = "Beginning Balance";
-                beginBal.Created = DateTime.Now;
-                beginBal.HAccountId = houseAccount.Id;
-                beginBal.Reconcile = true;
-                beginBal.Type = "income";
+                {
+                    Transaction beginBal = new Transaction();
+                    beginBal.Amount = houseAccount.Balance;
+                    beginBal.Descript = "Beginning Balance";
+                    beginBal.Created = DateTime.Now;
+                    beginBal.HAccountId = houseAccount.Id;
+                    beginBal.Reconcile = true;
+                    beginBal.Type = "income";
 
-                db.Transactions.Add(beginBal);
+                    db.Transactions.Add(beginBal);
 
-                db.HAccounts.Add(houseAccount);
+                    db.HAccounts.Add(houseAccount);
 
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
                 }
                 else
                 {
@@ -97,7 +121,7 @@ namespace Financial_Portal.Controllers
         public PartialViewResult _Edit(int? id)
         {
             HouseAccount houseAccount = db.HAccounts.Find(id);
-            
+
             ViewBag.HhId = new SelectList(db.Households, "Id", "Id", houseAccount.HhId);
             return PartialView(houseAccount);
         }
@@ -132,8 +156,8 @@ namespace Financial_Portal.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
 
-            var transactions = db.Transactions.Where(t=> t.HAccountId == id);
-            foreach( var tr in transactions)
+            var transactions = db.Transactions.Where(t => t.HAccountId == id);
+            foreach (var tr in transactions)
             {
                 tr.CatId = null;
                 tr.HAccountId = null;

@@ -381,7 +381,7 @@
     <Content Include="Views\Categories\_Details.cshtml" />
     <Content Include="Views\Categories\_Edit.cshtml" />
     <Content Include="Views\Categories\Index.cshtml" />
-    <Content Include="Views\Budgets\_Create.cshtml" />
+    <Content Include="Views\Budgets\_Add.cshtml" />
     <Content Include="Views\Budgets\_Delete.cshtml" />
     <Content Include="Views\Budgets\_Details.cshtml" />
     <Content Include="Views\Budgets\_Edit.cshtml" />
@@ -407,7 +407,7 @@
     <Content Include="Views\HouseHolds\Index.cshtml" />
     <Content Include="Views\HouseHolds\Join.cshtml" />
     <Content Include="Views\Account\EditProfile.cshtml" />
-    <Content Include="Views\HouseAccounts\_pDetails.cshtml" />
+    <Content Include="Views\HouseAccounts\_pNotUsedDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
