@@ -15,9 +15,11 @@ namespace Financial_Portal.Models
         public string CName { get; set; }
         public string Type { get; set; }
         public int? HhId { get; set; }
+        public bool isDeleted { get; set; }
 
         public virtual HouseHold Hh { get; set; }
 
         public virtual ICollection<Transaction> Transactions { get; set; }
+        public virtual ICollection<Budget> Budgets { get; set; }
     }
 }

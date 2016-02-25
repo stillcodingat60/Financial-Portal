@@ -8,7 +8,12 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css" />
     @Scripts.Render("~/bundles/modernizr")
     <link rel="stylesheet" href="~/Content/font-awesome.css">
-    </head>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+  
+</head>
 <body>
     <!--header start-->
 
@@ -46,58 +51,66 @@
                 <h5 class="centered">Menu</h5>
 
                 <li class="mt">
-                    <a href=@Url.Action("Index", "Home")
+                    <a href="#">
                         <i class="fa fa-dashboard"></i>
-                            <span>Home</span>                           
+                        
+                        @Html.ActionLink("Home", "Index", "Home")
                     </a>
                 </li>
 
-                <li class="sub-menu"> 
-                    <a href="javascript:;">                   
+                <li class="sub-menu">
+                    <a href="javascript:;">
                         <i class="fa fa-desktop"></i>
-                        <span>About</span>
+                        <span>Actions</span>
                     </a>
-                    <ul class="sub">                        
+                    <ul class="sub">
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
                         <li>@Html.ActionLink("About", "About", "Home")</li>
                         <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     </ul>
                 </li>
 
-                <li>                    
-                    <a href=@Url.Action("Index", "HouseHolds")>
+                <li class="sub-menu">
+                    <a href="javascript:;">
                         <i class="fa fa-cogs"></i>
-                        <span>Financial Dashboard</span>
-                    </a>                 
-                </li>
-
-                <li class="sub-menu">
-                    <a href=@Url.Action("Details","Household")>
-                        <i class=" fa fa-bar-chart-o"></i>
-                        <span>Manage Household</span>
+                        <span>HouseHolds</span>
                     </a>
+                    <ul class="sub">
+                        <li>@Html.ActionLink("HouseHold", "Details", "HouseHolds")</li>
+                        <li>@Html.ActionLink("Dashboard", "Index", "HouseHolds")</li>
+                        <li>@Html.ActionLink("Accounts", "Index", "HouseAccounts")</li>
+                    </ul>
                 </li>
-
                 <li class="sub-menu">
-                    <a href=@Url.Action("Index", "HouseAccounts")>
+                    <a href="javascript:;">
                         <i class="fa fa-book"></i>
-                        <span>Manage Accounts</span>
-                    </a>
-                </li>
-
-                <li class="sub-menu">
-                    <a href=@Url.Action("Index", "Categories")>
-                        <i class="fa fa-tasks"></i>
                         <span>Categories</span>
                     </a>
+                    <ul class="sub">
+                        <li>@Html.ActionLink("Index", "Index", "Categories")</li>
+                        <li>@Html.ActionLink("Index", "Index", "Categories")</li>
+                        <li>@Html.ActionLink("Index", "Index", "Categories")</li>
+                    </ul>
                 </li>
-
                 <li class="sub-menu">
-                    <a href=@Url.Action("Index", "Budgets")>
-                        <i class="fa fa-th"></i>
+                    <a href="javascript:;">
+                        <i class="fa fa-tasks"></i>
                         <span>Budgets</span>
-                    </a>                    
+                    </a>
+                    <ul class="sub">
+                        <li>@Html.ActionLink("Index", "Index", "Budgets")</li>
+                    </ul>
                 </li>
-
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-th"></i>
+                        <span>Data Tables</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a href="basic_table.html">Basic Table</a></li>
+                        <li><a href="responsive_table.html">Responsive Table</a></li>
+                    </ul>
+                </li>
                 <li class="sub-menu">
                     <a href="javascript:;">
                         <i class=" fa fa-bar-chart-o"></i>

@@ -1,4 +1,5 @@
 ﻿@model Financial_Portal.Models.Category
+<hr />
 
 <h3 class="centered">Edit</h3>
 
@@ -6,38 +7,46 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4 class="centered">Category</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
+    <h4 class="centered">Category</h4>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Id)
+
+    <div class="row">
+        <div class="form-group centered">
+            <div class="col-lg-4">
+                Category Name
+            </div>
+            <div class="col-lg-8">
                 @Html.EditorFor(model => model.CName, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.CName, "", new { @class = "text-danger" })
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("Type", ViewBag.Grype as SelectList, "select", htmlAttributes: new { @class = "form-control" })                
-                @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="col-md-10">
-            @Html.Hidden("HhId")
-            @Html.ValidationMessageFor(model => model.HhId, "", new { @class = "text-danger" })
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-4 col-md-8">
-                <input type="submit" value="Save" class="btn btn-default" /> |
-                @Html.ActionLink("Close", "Index", "Categories", null, new { @class = "btn btn-primary" })
-            </div>
-        </div>
     </div>
+        <div class="row">
+            <div class="form-group centered">
+                <div class="col-lg-4">
+                    Category Type
+                </div>
+                <div class="col-lg-8">
+                    @Html.DropDownList("Type", ViewBag.Grype as SelectList, "select", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
+                </div>
+                <br />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                @Html.Hidden("HhId")
+                @Html.ValidationMessageFor(model => model.HhId, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-6 col-md-6">
+                    <input type="submit" value="Save" class="btn btn-default" /> |
+                    @Html.ActionLink("Close", "Index", "Categories", null, new { @class = "btn btn-primary" })
+                </div>
+            </div>
+        </div>
+
 }

@@ -306,6 +306,8 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.woff2" />
     <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="private.config" />
+    <Content Include="connection.config" />
     <None Include="Properties\PublishProfiles\jmm-financialportal.pubxml" />
     <None Include="Properties\PublishProfiles\jmmcconnell.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -408,6 +410,7 @@
     <Content Include="Views\HouseHolds\Join.cshtml" />
     <Content Include="Views\Account\EditProfile.cshtml" />
     <Content Include="Views\HouseAccounts\_pNotUsedDetails.cshtml" />
+    <Content Include="Views\Shared\_Dashboard-Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

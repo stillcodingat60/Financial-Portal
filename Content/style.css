@@ -21,7 +21,7 @@ body {
 
 /* Set padding to keep content from hitting the edges */
 #body-content {
-    margin-left: 190px;
+    margin-left: 200px;
     padding-top:60px;
     padding-left: 30px;
     padding-right: 15px;
@@ -73,6 +73,10 @@ a, a:hover, a:focus {
 }
 
 #editAcct {
+    margin: 65px 10px 0 0;
+}
+
+#insertPartials {
     margin: 65px 10px 0 0;
 }
 

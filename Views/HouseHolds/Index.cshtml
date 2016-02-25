@@ -1,38 +1,44 @@
 ﻿@model Financial_Portal.Models.HouseHold
 
 @{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_Dashboard-Layout.cshtml";
 }
-<br /><br /><br />
-<h2>The @Html.DisplayFor(model => model.HName) Dashboard</h2>
-<div class="col-lg-6 centered">
-    <form id="contact-form" action="@Url.Action("Invite","HouseHolds")" method="post" novalidate>
-            @Html.AntiForgeryToken()
-            <div class="col-lg-12 centered">
-                <h2>Invite someone to join your Household</h2>
-            </div>
-
-        <div class="row">
-            <div class="col-lg-3"></div>
-            <div class="col-lg-3">
-                <label for="name">First &Aacute; Last Name</label>
-                <input type="text" class="form-control" name="FName" placeholder="Their first & last name" />
-
-                <label for="email">Email</label>
-                <input type="email" class="form-control" name="Email" placeholder="Their email" />
-                <input type="hidden" name="HhId" value=@Html.DisplayFor(model => model.Id)>
-            </div>
-
-            <div class="col-lg-3 centered">
-                <br /> <br /><br />
-                <label>The message will be automatically generated for you.</label>
-                <br /> <br />
-                <button class="btn btn-primary">
-                    Send Invitation
-                </button>
-            </div>
-            <div class="col-lg-3"></div>
-        </div>
-    </form>
+<div class="row">
+    <h3>The @Html.DisplayFor(model => model.HName) Dashboard</h3>
+    <div class="col-lg-6 centered">
+        <div id="myfirstchart" style="height: 350px;"></div>
+    </div>
+    <div class="col-lg-6 centered">
+        <div id="mysecondchart" style="height: 350px;"></div>
+    </div>
 </div>
+<div class="row">
+    <div class="col-lg-12 centered">
+        <h3>Budget vs Actual Expenses - Current Month</h3>
+        <div id="mythirdchart" style="height: 350px;"></div>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.post('@Url.Action("GetChart","HouseHolds")').then(function (response) {
+                new Morris.Donut({
+                    element: 'myfirstchart',
+                    data: response.donut,
+                    resize: true
+                });
+                new Morris.Bar({
+                    element: 'mythirdchart',
+                    data: response.bar,
+                    xkey: 'y',
+                    ykeys: ['a', 'b'],
+                    labels: ['actual', 'budgeted'],
+                    resize: true
+                });
+            });
+
+        });
+    </script>
+}

@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using Financial_Portal.Models;
 using Microsoft.AspNet.Identity;
 using System.Configuration;
+using Newtonsoft.Json;
 
 namespace Financial_Portal.Controllers
 {
@@ -208,5 +209,52 @@ namespace Financial_Portal.Controllers
 
             //return View();
         }
+
+        public ActionResult GetChart()
+        {
+            var HhId = Convert.ToInt32(User.Identity.GetHouseHoldId());
+            var house = db.Households.Find(HhId);
+            var accts = db.HAccounts.Find(HhId);
+
+           // var totMonthlyInc = db.Transactions.Where(t => t.HAccountId == accts.Id && t.Type == "income").Select(p => p.Amount).Sum();
+           //var totMonthlyExp = db.Transactions.Where(t => t.HAccountId == accts.Id && t.Type == "expense").Select(p => p.Amount).Sum();
+            var totMonthlyBud = db.Budgets.Where(t => t.HhId == HhId && t.Type == "expense").Select(p => p.BAmount).Sum();
+
+            var chartData = (from catd in house.Categories where catd.Type.Equals("expense")
+                             let act = (from jmm in catd.Transactions
+                                      where jmm.Created.Month.Equals(DateTime.Now.Month)
+                                      select jmm.Amount).DefaultIfEmpty().Sum()
+                             let bud = (from mrm in catd.Budgets
+                                        select mrm.BAmount).DefaultIfEmpty().Sum()
+
+                             select new
+                             {
+                                 y = catd.CName,
+                                 a = act,
+                                 b = bud
+                             }).ToArray();
+            //return Content(JsonConvert.SerializeObject(chartData), "application/json");
+
+            //donut data
+            var donutData = (from cats in house.Categories
+                            let sum = (from tr in cats.Budgets
+                                       select tr.BAmount).DefaultIfEmpty().Sum()
+                            let bSum = (from b in cats.Budgets
+                                        select b.BAmount).DefaultIfEmpty().Sum()
+
+                            select new
+                            {
+                                label = cats.CName,
+                                value = sum
+                            }).ToArray();
+            var data = new
+            {
+                donut = donutData,
+                bar = chartData
+            };
+            return Content(JsonConvert.SerializeObject(data), "application/json");
+
+        }
+
     }
 }

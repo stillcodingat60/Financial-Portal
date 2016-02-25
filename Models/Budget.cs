@@ -16,5 +16,6 @@ namespace Financial_Portal.Models
         public int BAmount { get; set; }
 
         public virtual Category Cat { get; set; }
+        
     }
 }
