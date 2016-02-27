@@ -7,10 +7,26 @@
 <div class="row">
     <h3>The @Html.DisplayFor(model => model.HName) Dashboard</h3>
     <div class="col-lg-6 centered">
+        <h3 class="centered">Budgeted Items</h3>
         <div id="myfirstchart" style="height: 350px;"></div>
     </div>
     <div class="col-lg-6 centered">
-        <div id="mysecondchart" style="height: 350px;"></div>
+        <h3 class="centered">Monthly Totals</h3>
+        <ul class="list-group">
+            <li class="list-group-item">                
+                <span id="MInc" class="badge"></span>
+                Total Monthly Income
+            </li>
+            <li class="list-group-item">
+                Total Monthly Expense
+                <span id="MExp" class="badge"></span>
+            </li>
+            <li class="list-group-item">
+                Total Monthly Budget
+                <span id="MBud" class="badge"></span>
+            </li>
+        </ul>
+        <div class="centered" id="totals" style="height: 250px;"></div>
     </div>
 </div>
 <div class="row">
@@ -26,7 +42,7 @@
             $.post('@Url.Action("GetChart","HouseHolds")').then(function (response) {
                 new Morris.Donut({
                     element: 'myfirstchart',
-                    data: response.donut,
+                    data: response.donut,                   
                     resize: true
                 });
                 new Morris.Bar({
@@ -37,6 +53,22 @@
                     labels: ['actual', 'budgeted'],
                     resize: true
                 });
+                new Morris.Donut({
+                    element: 'totals',
+                    data: response.donut2,
+                    backgroundColor: '#ccc',
+                    labelColor: '#060',
+                    colors: [
+                      '#196619',
+                      '#ff0000',
+                      '#0000ff'                      
+                    ],
+                    resize: true
+                });
+                $('#MInc').text(response.totMonthlyInc);
+                $('#MExp').text(response.totMonthlyExp);
+                $('#MBud').text(response.totMonthlyBud);
+
             });
 
         });

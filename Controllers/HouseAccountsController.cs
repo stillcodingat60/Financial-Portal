@@ -122,7 +122,6 @@ namespace Financial_Portal.Controllers
         {
             HouseAccount houseAccount = db.HAccounts.Find(id);
 
-            ViewBag.HhId = new SelectList(db.Households, "Id", "Id", houseAccount.HhId);
             return PartialView(houseAccount);
         }
 
@@ -139,7 +138,7 @@ namespace Financial_Portal.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.HhId = new SelectList(db.Households, "Id", "Id", houseAccount.HhId);
+
             return View(houseAccount);
         }
 

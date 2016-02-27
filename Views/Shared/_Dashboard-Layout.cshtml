@@ -51,66 +51,58 @@
                 <h5 class="centered">Menu</h5>
 
                 <li class="mt">
-                    <a href="#">
+                    <a href=@Url.Action("Index", "Home")>
                         <i class="fa fa-dashboard"></i>
-                        
-                        @Html.ActionLink("Home", "Index", "Home")
+                            <span>Home</span>
                     </a>
                 </li>
 
                 <li class="sub-menu">
                     <a href="javascript:;">
                         <i class="fa fa-desktop"></i>
-                        <span>Actions</span>
+                        <span>About</span>
                     </a>
                     <ul class="sub">
-                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
                         <li>@Html.ActionLink("About", "About", "Home")</li>
                         <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     </ul>
                 </li>
 
-                <li class="sub-menu">
-                    <a href="javascript:;">
+                <li>
+                    <a href=@Url.Action("Index", "HouseHolds")>
                         <i class="fa fa-cogs"></i>
-                        <span>HouseHolds</span>
+                        <span>Financial Dashboard</span>
                     </a>
-                    <ul class="sub">
-                        <li>@Html.ActionLink("HouseHold", "Details", "HouseHolds")</li>
-                        <li>@Html.ActionLink("Dashboard", "Index", "HouseHolds")</li>
-                        <li>@Html.ActionLink("Accounts", "Index", "HouseAccounts")</li>
-                    </ul>
                 </li>
+
                 <li class="sub-menu">
-                    <a href="javascript:;">
+                    <a href=@Url.Action("Details","Households")>
+                        <i class=" fa fa-bar-chart-o"></i>
+                        <span>Manage Household</span>
+                    </a>
+                </li>
+
+                <li class="sub-menu">
+                    <a href=@Url.Action("Index", "HouseAccounts")>
                         <i class="fa fa-book"></i>
+                        <span>Manage Accounts</span>
+                    </a>
+                </li>
+
+                <li class="sub-menu">
+                    <a href=@Url.Action("Index", "Categories")>
+                        <i class="fa fa-tasks"></i>
                         <span>Categories</span>
                     </a>
-                    <ul class="sub">
-                        <li>@Html.ActionLink("Index", "Index", "Categories")</li>
-                        <li>@Html.ActionLink("Index", "Index", "Categories")</li>
-                        <li>@Html.ActionLink("Index", "Index", "Categories")</li>
-                    </ul>
                 </li>
+
                 <li class="sub-menu">
-                    <a href="javascript:;">
-                        <i class="fa fa-tasks"></i>
+                    <a href=@Url.Action("Index", "Budgets")>
+                        <i class="fa fa-th"></i>
                         <span>Budgets</span>
                     </a>
-                    <ul class="sub">
-                        <li>@Html.ActionLink("Index", "Index", "Budgets")</li>
-                    </ul>
                 </li>
-                <li class="sub-menu">
-                    <a href="javascript:;">
-                        <i class="fa fa-th"></i>
-                        <span>Data Tables</span>
-                    </a>
-                    <ul class="sub">
-                        <li><a href="basic_table.html">Basic Table</a></li>
-                        <li><a href="responsive_table.html">Responsive Table</a></li>
-                    </ul>
-                </li>
+
                 <li class="sub-menu">
                     <a href="javascript:;">
                         <i class=" fa fa-bar-chart-o"></i>

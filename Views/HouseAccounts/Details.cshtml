@@ -4,16 +4,18 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<h3>Details <button class="btn btn-primary right" id="createButton">Enter New Transaction</button></h3>
 
-<div>
-    <h4>
-        Account: @Html.DisplayFor(model => model.HAName) <br />
-        Available Balance: $ @Html.DisplayFor(model => model.Balance)<br />
-        Bank Balance: $@ViewBag.bankBal
-        <button class="btn btn-primary right" id="createButton">Create New Entry</button>
-    </h4>
-        
+<div class="row">
+    <div class="col-lg-4">
+        <h4>
+            Account: @Html.DisplayFor(model => model.HAName) <br />
+            Available Balance: $ @Html.DisplayFor(model => model.Balance)<br />
+            Bank Balance: $@ViewBag.bankBal            
+        </h4>
+    </div>
+    <div class="col-lg-8" id="insertPartial">
+    </div>
 </div>
 
 <p>
@@ -89,12 +91,7 @@
         }
     </tbody>
 </table>
-<div class="row">
-    <div class="col-lg-offset-4 col-lg-4 centered" id="insertPartial">
 
-    </div>
-
-</div>
 
 @section Scripts {
     <script type="text/javascript">

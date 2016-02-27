@@ -47,7 +47,7 @@
                         <td class="centered">
                             <button data-id="@item.Account.Id" class="btn btn-primary editButton">Edit</button> |
                             <button data-id="@item.Account.Id" class="btn btn-primary delButton">DELETE</button> |
-                            @*<button data-id="@item.Id" class="btn btn-primary trxButton">Detail</button>*@
+                            
                             @Html.ActionLink("Details", "Details", "HouseAccounts", new { id = item.Account.Id }, new { @class = "btn btn-primary" })
                         </td>
                     </tr>

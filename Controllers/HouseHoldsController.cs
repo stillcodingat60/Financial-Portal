@@ -27,6 +27,8 @@ namespace Financial_Portal.Controllers
             {
                 return HttpNotFound();
             }
+            var HhId = Convert.ToInt32(User.Identity.GetHouseHoldId());
+            
             return View(houseHold);
         }
 
@@ -40,15 +42,15 @@ namespace Financial_Portal.Controllers
                 ViewBag.Message = "You are not a user on this system. Please register first!";
                 return View();
             }
-           
+
             HouseHold houseHold = db.Households.Include("Users").Include("HAccounts").FirstOrDefault(p => p.Id == user.HouseHoldId);
-                                       
-            if(houseHold == null)
+
+            if (houseHold == null)
             {
                 ViewBag.Message = " Please create or join a household first!";
-                return View(); 
+                return View();
             }
-        
+
             //var searchUsers = db.Users.AsQueryable();                               // this block of code sets up a search for users whose household id
             //searchUsers = searchUsers.Where(p => p.HouseHoldId == houseHold.Id);    // matches the currently passed HouseHold id
             //var hhUsers = searchUsers.OrderByDescending(p => p.LastName).ToList();  // and returns the listing to the view
@@ -75,10 +77,10 @@ namespace Financial_Portal.Controllers
                 db.SaveChanges();                   //save the newly created household
 
                 //var hh = db.Households.FirstOrDefault(h => h.HName == houseHold.HName);  //retrieve the newly created household by name because we don't have the HhId
-                
+
                 //var currUser = db.Users.Find(User.Identity.GetUserId()).HouseHoldId==houseHold.Id;    //now we retrieve the user record and assign the household id
 
-                var searchCats = db.Categories.AsQueryable();                         
+                var searchCats = db.Categories.AsQueryable();
                 searchCats = searchCats.Where(p => p.HhId == null);         //add the initial list of seeded categories
                 var CatList = new List<Category>();                         //for each newly created HouseHold
                 foreach (var eachCat in searchCats)
@@ -95,7 +97,7 @@ namespace Financial_Portal.Controllers
 
                 var user = db.Users.Find(User.Identity.GetUserId());
                 user.HouseHoldId = houseHold.Id;
-                              
+
                 db.SaveChanges();            //saves the hhid to ApplicationUser
 
                 return RedirectToAction("Details", new { id = houseHold.Id });  //id name must match the id name in the index action passed param
@@ -115,12 +117,12 @@ namespace Financial_Portal.Controllers
             var inv = new Invite();
             inv.EmailInvite = contact.Email;
             inv.HhId = contact.HhId;
-            inv.CodeNr = 123456789;
+            inv.CodeNr = KeyGenerator.GetUniqueKey(7);
             db.Invites.Add(inv);
             db.SaveChanges();
             var requestor = contact.FName + ' ' + contact.LName;
             var Emailer = new EmailService();
-            
+
             contact.Message = "Please join my financial household. You will have to create an account on the application. Begin by going to Http://jmm-financialportal.azurewebsites.net to login and use the code listed below to validate";
 
             var mail = new IdentityMessage
@@ -141,7 +143,7 @@ namespace Financial_Portal.Controllers
             user.HouseHoldId = null;
             db.SaveChanges();
             return RedirectToAction("Create");
-           
+
         }
 
         // POST: HouseHolds/Delete/5
@@ -186,13 +188,13 @@ namespace Financial_Portal.Controllers
                 return View();
             }
 
-            var CodeNr = Convert.ToInt32(Code);
+            //var CodeNr = Convert.ToInt32(Code);
             var user = db.Users.Find(User.Identity.GetUserId());             //get the current user
-            Invite invitation = db.Invites.FirstOrDefault(p => p.EmailInvite == user.Email && p.CodeNr == CodeNr ); //check to see that the invite email matches the current user's email
+            Invite invitation = db.Invites.FirstOrDefault(p => p.EmailInvite == user.Email && p.CodeNr == Code); //check to see that the invite email matches the current user's email
 
-            if (invitation == null)                         
+            if (invitation == null)
             {                                                                //because someone may have gotten the invite email and tried to join
-                ViewBag.errorMessage = "Sorry, there is no invitation on file for you";  
+                ViewBag.errorMessage = "Sorry, there is no invitation on file for you";
                 return View();                                               //without using the specific email address that was invited!
             }
 
@@ -214,16 +216,40 @@ namespace Financial_Portal.Controllers
         {
             var HhId = Convert.ToInt32(User.Identity.GetHouseHoldId());
             var house = db.Households.Find(HhId);
-            var accts = db.HAccounts.Find(HhId);
 
-           // var totMonthlyInc = db.Transactions.Where(t => t.HAccountId == accts.Id && t.Type == "income").Select(p => p.Amount).Sum();
-           //var totMonthlyExp = db.Transactions.Where(t => t.HAccountId == accts.Id && t.Type == "expense").Select(p => p.Amount).Sum();
-            var totMonthlyBud = db.Budgets.Where(t => t.HhId == HhId && t.Type == "expense").Select(p => p.BAmount).Sum();
+            var acctsHhId = db.HAccounts.Where(p => p.HhId == HhId);
+            var budgetsHhId = db.Budgets.Where(b => b.HhId == HhId);
 
-            var chartData = (from catd in house.Categories where catd.Type.Equals("expense")
+            var totMonthlyInc = acctsHhId.
+                SelectMany(t => t.Transactions).                //use SelectMany when you have multiple lists
+                Where(t => t.Type == "income" && t.CatId != null).
+                Select(t => t.Amount).
+                DefaultIfEmpty().
+                Sum();
+
+            var totMonthlyExp = acctsHhId.
+                 SelectMany(t => t.Transactions).
+                 Where(t => t.Type == "expense").
+                 Select(t => t.Amount).
+                 DefaultIfEmpty().
+                 Sum();
+
+            var totMonthlyBud = budgetsHhId.
+                 Select(b => b.BAmount).
+                 DefaultIfEmpty().
+                 Sum();
+
+            ViewBag.totMonthlyInc = totMonthlyInc;
+            ViewBag.totMonthlyExp = totMonthlyExp;
+            ViewBag.totMonthlyBud = totMonthlyBud;
+
+            var donutHole = new[] { new { label = "Income", value = (decimal)totMonthlyInc }, new { label = "Expenses", value = (decimal)totMonthlyExp }, new { label = "Budget", value = (decimal)totMonthlyBud } };
+
+            var chartData = (from catd in house.Categories
+                             where catd.Type.Equals("expense")
                              let act = (from jmm in catd.Transactions
-                                      where jmm.Created.Month.Equals(DateTime.Now.Month)
-                                      select jmm.Amount).DefaultIfEmpty().Sum()
+                                        where jmm.Created.Month.Equals(DateTime.Now.Month)
+                                        select jmm.Amount).DefaultIfEmpty().Sum()
                              let bud = (from mrm in catd.Budgets
                                         select mrm.BAmount).DefaultIfEmpty().Sum()
 
@@ -232,26 +258,31 @@ namespace Financial_Portal.Controllers
                                  y = catd.CName,
                                  a = act,
                                  b = bud
-                             }).ToArray();
-            //return Content(JsonConvert.SerializeObject(chartData), "application/json");
-
+                             }).ToArray();            
+            
             //donut data
             var donutData = (from cats in house.Categories
-                            let sum = (from tr in cats.Budgets
-                                       select tr.BAmount).DefaultIfEmpty().Sum()
-                            let bSum = (from b in cats.Budgets
-                                        select b.BAmount).DefaultIfEmpty().Sum()
+                             let sum = (from tr in cats.Budgets
+                                        select tr.BAmount).DefaultIfEmpty().Sum()
+                             let bSum = (from b in cats.Budgets
+                                         select b.BAmount).DefaultIfEmpty().Sum()
 
-                            select new
-                            {
-                                label = cats.CName,
-                                value = sum
-                            }).ToArray();
+                             select new
+                             {
+                                 label = cats.CName,
+                                 value = sum
+                             }).ToArray();
+
             var data = new
             {
                 donut = donutData,
-                bar = chartData
+                bar = chartData,
+                donut2 = donutHole,
+                totMonthlyInc = totMonthlyInc,
+                totMonthlyExp = totMonthlyExp,
+                totMonthlyBud = totMonthlyBud
             };
+
             return Content(JsonConvert.SerializeObject(data), "application/json");
 
         }
