@@ -6,8 +6,8 @@
 }
 
 <h3>
-    <label>Welcome to the @Html.DisplayFor(model => model.HName) HouseHold </label>
-    
+    <label class="centered">Welcome to the @Html.DisplayFor(model => model.HName) HouseHold </label>
+
 </h3>
 <div class="row">
     <div class="col-lg-6 left centered">
@@ -86,12 +86,16 @@
 
             @Html.AntiForgeryToken()
             <h4>Invite someone to join your Household</h4>
-            <label for="name">First / Last Name</label> <br />
-            <input type="text" class="form-control" name="FName" placeholder="Their first & last name" /><br />
 
-            <label for="email">Email</label><br />
-            <input type="email" class="form-control" name="Email" placeholder="Their email" />
-            <input type="hidden" name="HhId" value=@Html.DisplayFor(model => model.Id)>
+            <div >
+                <div>First / Last Name</div>
+                <input type="text" class="form-control" name="name" placeholder="Their first & last name" /><br />
+            </div>
+            <div>
+                <label for="email">Email</label>
+                <input type="email" class="form-control" name="Email" placeholder="Their email" />
+                <input type="hidden" name="HhId" value=@Html.DisplayFor(model => model.Id)>
+            </div>
             <br />
             <label>The message will be automatically generated for you.</label>
             <br />
@@ -106,9 +110,9 @@
         <label class="alert-danger">Please Note: THIS ACTION CANNOT BE UNDONE</label><br />
         <br />
         <a type="button"
-            class="btn"
-            href="#UserPrompt"
-            data-toggle="modal">LEAVE HOUSEHOLD</a>
+           class="btn btn-primary"
+           href="#UserPrompt"
+           data-toggle="modal">LEAVE HOUSEHOLD</a>
         @*<form id="contact-form" action="@Url.Action("Delete","HouseHolds")" method="post" novalidate>*@
         <div class="modal fade" id="UserPrompt">
             <div class="modal-dialog modal-sm">

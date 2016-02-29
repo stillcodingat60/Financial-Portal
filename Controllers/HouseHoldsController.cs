@@ -18,9 +18,15 @@ namespace Financial_Portal.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: HouseHolds - the index view will be the dashboard for the HouseHold
+        [AuthorizeHouseHoldRequired]
         public ActionResult Index()
         {
             var user = db.Users.Find(User.Identity.GetUserId());
+            if (user == null)
+            {
+                ViewBag.Message = "You are not a user on this system. Please register first!";
+                return View();
+            }
 
             HouseHold houseHold = db.Households.Find(user.HouseHoldId);
             if (houseHold == null)

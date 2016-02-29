@@ -20,8 +20,8 @@ body {
 }
 
 /* Set padding to keep content from hitting the edges */
-.body-content {
-    margin-left: 190px;
+#body-content {
+    margin-left: 200px;
     padding-top:60px;
     padding-left: 30px;
     padding-right: 15px;
@@ -73,7 +73,11 @@ a, a:hover, a:focus {
 }
 
 #editAcct {
-    margin: 90px 10px 0 0;
+    margin: 65px 10px 0 0;
+}
+
+#insertPartials {
+    margin: 38px 10px 0 0;
 }
 
 .red {
@@ -98,6 +102,35 @@ a, a:hover, a:focus {
 	text-decoration: none;
 }	
 
+#MInc {
+    background-color:#f2f2f2;
+    color:#33cc33;
+}
+#MExp {
+    background-color:#f2f2f2;
+    color:#ff0000;
+}
+#MBud{
+    background-color:#f2f2f2;
+    color:#0000ff;
+}
+
+#partialHeading {
+    float:right;
+}
+.form-group{
+    width:auto;
+}
+.catEdit{
+    margin-top:10px;
+    padding-bottom: 10px;
+}
+#reconcile label {
+    padding-bottom:5px;
+}
+ul.about{
+    list-style: circle outside;
+}
 
 /*Theme Backgrounds*/
 
@@ -2276,4 +2309,23 @@ label {
     min-height: 900px;
 }
 
+
+@media screen and (max-width:1050px){ 
+    #body-content {
+        margin-left: 190px!important;
+    }
+}
+
+/*ipad portrait*/
+@media screen and (min-device-width:768px) and (max-device-width : 1024px) and (orientation : portrait) {
+    #body-content {
+        margin-left: 100px!important;
+    }
+}
+
+@media screen and (max-width:769px) {
+    #body-content {
+        margin-left: 10px!important;
+    }
+}
 

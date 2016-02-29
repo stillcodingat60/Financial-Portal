@@ -16,6 +16,7 @@ namespace Financial_Portal.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Categories
+        [AuthorizeHouseHoldRequired]
         public ActionResult Index()
         {
             var HhId = Convert.ToInt32(User.Identity.GetHouseHoldId());

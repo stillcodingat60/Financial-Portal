@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Financial_Portal.Models.HouseAccount>
+﻿@model IEnumerable<Financial_Portal.Models.BankBalance>
 
 @{
     ViewBag.Title = "Index";
@@ -6,14 +6,14 @@
 }
 <div class="row">
     <div class="col-lg-6">
-        <h3>HouseHold Accounts
+        <h3>HouseHold Accounts - mine
             <button id="createButton" class="btn btn-primary">Create New Account</button>
         </h3>
 
         <p>
         <hr />    
         </p>
-        <table class="table table-bordered table-striped table-hover" id="acctTable">
+        <table class="table table-bordered table-striped compact table-hover" id="acctTable">
             <thead>
                 <tr>
                     <th class="centered">
@@ -23,26 +23,32 @@
                         Balance
                     </th>
                     <th class="centered">
+                        Bank Balance
+                    </th>
+                    <th class="centered">
                         Manage Accounts
                     </th>
-
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.HAName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Balance)
+                        <td class="centered">
+                            @Html.DisplayFor(modelItem => item.Account.HAName)
                         </td>
                         <td class="centered">
-                            <button data-id="@item.Id" class="btn btn-primary editButton">Edit</button> |
-                            <button data-id="@item.Id" class="btn btn-primary delButton">DELETE</button> |
-                            @*<button data-id="@item.Id" class="btn btn-primary trxButton">Detail</button>*@
-                            @Html.ActionLink("Details", "Details", "HouseAccounts", new { id = item.Id }, new { @class = "btn btn-primary" })
+                            @Html.DisplayFor(modelItem => item.Account.Balance)
+                 
+                        </td>
+                        <td class="centered">
+                            @Html.DisplayFor(modelItem => item.BankBal)
+                        </td>
+                        <td class="centered">
+                            <button data-id="@item.Account.Id" class="btn btn-primary editButton">Edit</button> |
+                            <button data-id="@item.Account.Id" class="btn btn-primary delButton">DELETE</button> |
+                            
+                            @Html.ActionLink("Details", "Details", "HouseAccounts", new { id = item.Account.Id }, new { @class = "btn btn-primary" })
                         </td>
                     </tr>
                 }

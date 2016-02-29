@@ -2,8 +2,10 @@
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
+using Owin.Security.Providers.LinkedIn;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
+using Microsoft.Owin.Security.Facebook;
 using Owin;
 using Financial_Portal.Models;
 
@@ -54,15 +56,17 @@ namespace Financial_Portal
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            app.UseFacebookAuthentication(
+               appId: "1741391406091193",
+               appSecret: "513a835d66763671649db4c64f58b6bb");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "70980683560-4hp6cb7vsr86frarkiuv3dgn2279vh8m.apps.googleusercontent.com",
+                ClientSecret = "yG6xPD4YU4AunJhwMqn6T3vj"
+            });
+
+            app.UseLinkedInAuthentication("77rv93lbay6g7y", "o32rKZNp8JPFmNdC");
         }
     }
 }

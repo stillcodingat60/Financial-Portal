@@ -33,8 +33,9 @@ namespace Financial_Portal
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css",
                       "~/Content/style.css",
+                      "~/Content/site.css",
+                      "~/Content/Zocial/zocial.css",
                       "~/Content/style-responsive.css",
                       "~/Content/table-responsive.css",
                       "~/Content/to-do.css",

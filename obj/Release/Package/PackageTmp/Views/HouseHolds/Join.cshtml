@@ -4,9 +4,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="jumbotron centered">
-    <h3>This is the Join Portal Window</h3>
-    <p class="lead">To start, please log into the system, per the instructions below.</p>
-    <p>>Learn more &raquo;</p>
+    <h3>This Create or Join a Household Page</h3>
+    <p class="lead">You have arrived here because you are registered to the app but are not yet part of a household. If you have recieved an invitation to Join a house, please enter your invite code below and press "Join". If you would like to start a new household, please click "Create Household" below.</p>    
 </div>
 
 
@@ -36,7 +35,7 @@
         </div>
         <div class="col-lg-3 centered">
             <br /><br /><br /><br />
-            <p>To start a new Household, click this button: <button class="btn btn-sm btn-primary">@Html.ActionLink("Create HouseHold", "Create", "HouseHolds")</button></p>
+            <p>To start a new Household, click this button: <button class="btn btn-primary">@Html.ActionLink("Create HouseHold", "Create", "HouseHolds", new { @class = "btn btn-primary" })</button></p>
         </div>
         <div class="col-lg-2"></div>
     </div>

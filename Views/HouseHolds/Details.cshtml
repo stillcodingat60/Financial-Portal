@@ -87,11 +87,11 @@
             @Html.AntiForgeryToken()
             <h4>Invite someone to join your Household</h4>
 
-            <div class="form-control">
-                <label for="name">First / Last Name</label>
-                <input type="text" class="form-control" name="FName" placeholder="Their first & last name" /><br />
+            <div >
+                <div>First / Last Name</div>
+                <input type="text" class="form-control" name="name" placeholder="Their first & last name" /><br />
             </div>
-            <div class="form-control">
+            <div>
                 <label for="email">Email</label>
                 <input type="email" class="form-control" name="Email" placeholder="Their email" />
                 <input type="hidden" name="HhId" value=@Html.DisplayFor(model => model.Id)>

@@ -172,3 +172,4 @@ C:\Users\jamie\Documents\Visual Studio 2015\Projects\Financial-Portal - Copy\Fin
 C:\Users\jamie\Documents\Visual Studio 2015\Projects\Financial-Portal - Copy\Financial-Portal\obj\Debug\Financial-Portal.csprojResolveAssemblyReference.cache
 C:\Users\jamie\Documents\Visual Studio 2015\Projects\Financial-Portal - Copy\Financial-Portal\obj\Debug\Financial-Portal.dll
 C:\Users\jamie\Documents\Visual Studio 2015\Projects\Financial-Portal - Copy\Financial-Portal\obj\Debug\Financial-Portal.pdb
+C:\Users\jamie\Documents\Visual Studio 2015\Projects\Financial-Portal\Financial-Portal\bin\Owin.Security.Providers.dll

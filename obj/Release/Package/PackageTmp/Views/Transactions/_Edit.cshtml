@@ -1,80 +1,86 @@
 ﻿@model Financial_Portal.Models.Transaction
 
-
-<h2>Edit</h2>
-
+<h3 class="centered">Edit</h3>
+<hr />
 @using (Html.BeginForm("Edit", "Transactions"))
+
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Transaction</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
-        @Html.HiddenFor(model => model.HAccount)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CatId, "CatId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("CatId" , ViewBag.CId as SelectList, "select", htmlAttributes: new { @class = "form-control"})
-                @Html.ValidationMessageFor(model => model.CatId, "", new { @class = "text-danger" })
+    <div class="row">
+        <div class="col-lg-6">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.HAccount)
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-4 catEdit">Category</div>
+                <div class="col-md-6">
+                    @Html.DropDownList("CatId", ViewBag.CId as SelectList, "select", htmlAttributes: new { @class = "form-control"})
+                    @Html.ValidationMessageFor(model => model.CatId, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.HAccountId, "HAccountId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("HAccountId", ViewBag.HAcctId as SelectList, "select", htmlAttributes: new { @class = "form-control"})
-                @Html.ValidationMessageFor(model => model.HAccountId, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-4 catEdit">Account</div>
+                <div class="col-md-6">
+                    @Html.DropDownList("HAccountId", ViewBag.HAcctId as SelectList, "select", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.HAccountId, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Created, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Created, new { htmlAttributes = new { @class = "form-control", @type = "text", @onfocusout = "(this.type='text')", @onfocus = "(this.type='date')" } })
-                @Html.ValidationMessageFor(model => model.Created, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Descript, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Descript, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Descript, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Type, "Type", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("Type", ViewBag.Grype as SelectList, "select", htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Reconcile, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.Reconcile)
-                    @Html.ValidationMessageFor(model => model.Reconcile, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-4 catEdit">Date</div>
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.Created, new { htmlAttributes = new { @class = "form-control", @type = "text", @onfocusout = "(this.type='text')", @onfocus = "(this.type='date')" } })
+                    @Html.ValidationMessageFor(model => model.Created, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-4 catEdit">Description</div>
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.Descript, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Descript, "", new { @class = "text-danger" })
+                </div>
+            </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Amount, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-4 catEdit">Type</div>
+                <div class="col-md-6">
+                    @Html.DropDownList("Type", ViewBag.Grype as SelectList, "select", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-4 catEdit">Reconciled?</div>
+                <div class="col-md-6">
+                    <div class="checkbox">
+                        @if (Model.Reconcile == true)
+                        {
+                            @Html.EditorFor(model => model.Reconcile);
+                            @Html.Label(" - Yes")
+                        }
+                        else
+                        {
+                            @Html.EditorFor(model => model.Reconcile);
+                            @Html.Label(" - No")
+                        }
+
+                        @Html.ValidationMessageFor(model => model.Reconcile, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-4 catEdit">Amount</div>
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+                </div>
             </div>
         </div>
-
+    </div>
+    <div class="row centered">
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
+            <div class="col-md-12">
                 <input type="submit" value="Save" class="btn btn-primary" />
                 @Html.ActionLink("Close", "Details", "HouseAccounts", new { id = Model.HAccountId }, new { @class = "btn btn-primary" })
             </div>
